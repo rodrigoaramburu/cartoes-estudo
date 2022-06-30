@@ -1,4 +1,7 @@
 <x-app>
+   
+   <x-flash />
+
    <div class="flex justify-end pb-2">
       <a 
          href="{{route('decks.create')}}" 

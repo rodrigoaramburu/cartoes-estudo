@@ -20,4 +20,11 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
 
         return $decks;
     }
+
+    public function save(DeckDTO $deck): void
+    {
+        Deck::create([
+            'name' => $deck->name()
+        ]);
+    }
 }

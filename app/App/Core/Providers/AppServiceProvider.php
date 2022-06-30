@@ -3,9 +3,10 @@
 namespace App\Core\Providers;
 
 use App\Core\Components\App;
-use Domain\Deck\Repositories\DeckRepositoryInterface;
+use App\Core\Components\Flash;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Domain\Deck\Repositories\DeckRepositoryInterface;
 use Infrastructure\Persistence\DeckRepositoryEloquent;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::component('app', App::class);
+        Blade::component('flash', Flash ::class);
     }
 }
