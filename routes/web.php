@@ -1,5 +1,6 @@
 <?php
 
+use App\Web\Deck\Controllers\DeckController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/decks', [DeckController::class, 'index'])->name('decks.index');
+Route::get('/decks/create', [DeckController::class, 'create'])->name('decks.create');
