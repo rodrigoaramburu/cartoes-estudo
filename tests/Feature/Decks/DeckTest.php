@@ -73,6 +73,11 @@ test('deve deletar um deck', function () {
     ]);
 });
 
+test('deve retornar 404 se deck não existe ao deletar', function () {
+    $this->delete(route('decks.delete', 521))
+        ->assertStatus(404);
+});
+
 test('deve exibir tela de edição de deck', function () {
     $deck = Deck::factory()->create();
 

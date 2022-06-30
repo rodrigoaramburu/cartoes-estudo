@@ -44,7 +44,12 @@ final class DeckController extends Controller
 
     public function delete(string $id, DeleteDeckAction $deleteDeckAction): RedirectResponse
     {
-        $deleteDeckAction((int) $id);
+        try {
+            $deleteDeckAction((int) $id);
+        } catch (DeckNotFoundException $e) {
+            throw new NotFoundHttpException($e->getMessage());
+        }
+
         Session::flash('message-success', 'O Baralho foi deletado');
 
         return redirect()->route('decks.index');
