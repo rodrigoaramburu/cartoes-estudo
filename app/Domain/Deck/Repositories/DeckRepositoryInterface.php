@@ -16,4 +16,6 @@ interface DeckRepositoryInterface
     public function delete(int $id): void;
 
     public function findById(int $id): ?DeckDTO;
+
+    public function update(DeckDTO $deck): void;
 }

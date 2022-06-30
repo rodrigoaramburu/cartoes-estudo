@@ -22,3 +22,5 @@ Route::get('/decks', [DeckController::class, 'index'])->name('decks.index');
 Route::get('/decks/create', [DeckController::class, 'create'])->name('decks.create');
 Route::post('/decks/store', [DeckController::class, 'store'])->name('decks.store');
 Route::delete('/decks/delete/{id}', [DeckController::class, 'delete'])->name('decks.delete');
+Route::get('/decks/edit/{id}', [DeckController::class, 'edit'])->name('decks.edit');
+Route::put('/decks/edit/{id}', [DeckController::class, 'update'])->name('decks.update');

@@ -21,7 +21,7 @@ final class DeckDTO
     public static function fromArray(array $data): self
     {
         return new DeckDTO(
-            id: $data['id'] ?? null,
+            id: array_key_exists('id', $data) ? (int) $data['id'] : null,
             name: $data['name'],
             cards: $data['cards'] ?? null
         );

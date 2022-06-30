@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Web\Deck\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-final class DeckStoreRequest extends FormRequest
+final class DeckRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,7 +17,12 @@ final class DeckStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:3|max:160|unique:decks',
+            'name' => [
+                'required',
+                'min:3',
+                'max:160',
+                Rule::unique('decks')->ignore($this->id, 'id'),
+            ],
         ];
     }
 

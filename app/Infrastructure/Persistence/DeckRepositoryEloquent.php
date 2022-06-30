@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infrastructure\Persistence;
 
 use Domain\Deck\DTO\DeckDTO;
+use Domain\Deck\Exceptions\DeckNotFoundException;
 use Domain\Deck\Models\Deck;
 use Domain\Deck\Repositories\DeckRepositoryInterface;
 use Illuminate\Support\Collection;
@@ -33,8 +34,27 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
         Deck::destroy($id);
     }
 
-    public function findById(int $id): ?DeckDTO
+    public function findById(int $id): DeckDTO
     {
-        return Deck::find($id);
+        $deckModel = Deck::find($id);
+        if (! $deckModel) {
+            throw new DeckNotFoundException('Baralho não encontrado');
+        }
+
+        return DeckDTO::fromArray(
+            data: Deck::find($id)->toArray()
+        );
+    }
+
+    public function update(DeckDTO $deck): void
+    {
+        $deckModel = Deck::find($deck->id());
+        if (! $deckModel) {
+            throw new DeckNotFoundException('Baralho não encontrado');
+        }
+
+        $deckModel->update([
+            'name' => $deck->name(),
+        ]);
     }
 }
