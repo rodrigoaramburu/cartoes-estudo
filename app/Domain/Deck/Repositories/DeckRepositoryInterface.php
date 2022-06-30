@@ -10,5 +10,10 @@ use Illuminate\Support\Collection;
 interface DeckRepositoryInterface
 {
     public function all(): Collection;
+
     public function save(DeckDTO $deck): void;
+
+    public function delete(int $id): void;
+
+    public function findById(int $id): ?DeckDTO;
 }

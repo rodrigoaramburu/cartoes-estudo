@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Web\Deck\Controllers;
 
+use App\Core\Http\Controllers\Controller;
+use App\Web\Deck\Requests\DeckStoreRequest;
+use Domain\Deck\Actions\CreateDeckAction;
+use Domain\Deck\Actions\DeleteDeckAction;
+use Domain\Deck\Actions\ListDeckAction;
 use Domain\Deck\DTO\DeckDTO;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Domain\Deck\Actions\ListDeckAction;
 use Illuminate\Support\Facades\Session;
-use App\Core\Http\Controllers\Controller;
-use Domain\Deck\Actions\CreateDeckAction;
-use App\Web\Deck\Requests\DeckStoreRequest;
 
 final class DeckController extends Controller
 {
@@ -23,7 +23,6 @@ final class DeckController extends Controller
         return view('decks.index', compact('decks'));
     }
 
-
     public function create(): View
     {
         return view('decks.create');
@@ -32,9 +31,18 @@ final class DeckController extends Controller
     public function store(DeckStoreRequest $request, CreateDeckAction $createDeckAction): RedirectResponse
     {
         $createDeckAction(
-            DeckDTO::fromArray( $request->only(['name']) )
+            DeckDTO::fromArray($request->only(['name']))
         );
-        Session::flash('message-success','O Baralho foi salvo.');
+        Session::flash('message-success', 'O Baralho foi salvo.');
+
+        return redirect()->route('decks.index');
+    }
+
+    public function delete(string $id, DeleteDeckAction $deleteDeckAction): RedirectResponse
+    {
+        $deleteDeckAction((int) $id);
+        Session::flash('message-success', 'O Baralho foi deletado');
+
         return redirect()->route('decks.index');
     }
 }

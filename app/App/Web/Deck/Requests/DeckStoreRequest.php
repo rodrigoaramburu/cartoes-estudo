@@ -6,14 +6,13 @@ namespace App\Web\Deck\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
 final class DeckStoreRequest extends FormRequest
 {
     public function authorize(): bool
     {
         return true;
     }
-    
+
     public function rules(): array
     {
         return [

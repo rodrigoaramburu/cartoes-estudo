@@ -21,4 +21,4 @@ Route::get('/', function () {
 Route::get('/decks', [DeckController::class, 'index'])->name('decks.index');
 Route::get('/decks/create', [DeckController::class, 'create'])->name('decks.create');
 Route::post('/decks/store', [DeckController::class, 'store'])->name('decks.store');
-
+Route::delete('/decks/delete/{id}', [DeckController::class, 'delete'])->name('decks.delete');

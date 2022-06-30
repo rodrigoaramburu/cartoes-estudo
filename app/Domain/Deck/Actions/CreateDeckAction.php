@@ -11,10 +11,11 @@ final class CreateDeckAction
 {
     public function __construct(
         private DeckRepositoryInterface $deckRepository
-    ){}
+    ) {
+    }
 
     public function __invoke(DeckDTO $deck)
     {
-        $this->deckRepository->save( deck: $deck);
+        $this->deckRepository->save(deck: $deck);
     }
 }
