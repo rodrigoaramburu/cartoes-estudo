@@ -1,5 +1,6 @@
 <?php
 
+use App\Web\Deck\Controllers\CardController;
 use App\Web\Deck\Controllers\DeckController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,5 @@ Route::post('/decks/store', [DeckController::class, 'store'])->name('decks.store
 Route::delete('/decks/delete/{id}', [DeckController::class, 'delete'])->name('decks.delete');
 Route::get('/decks/edit/{id}', [DeckController::class, 'edit'])->name('decks.edit');
 Route::put('/decks/edit/{id}', [DeckController::class, 'update'])->name('decks.update');
+
+Route::get('/decks/{deckId}/cards', [CardController::class, 'index'])->name('cards.index');

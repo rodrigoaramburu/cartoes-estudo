@@ -9,7 +9,7 @@ use App\Web\Deck\Requests\DeckRequest;
 use Domain\Deck\Actions\CreateDeckAction;
 use Domain\Deck\Actions\DeleteDeckAction;
 use Domain\Deck\Actions\ListDeckAction;
-use Domain\Deck\Actions\RetriveDeckAction;
+use Domain\Deck\Actions\RetrieveDeckAction;
 use Domain\Deck\Actions\UpdateDeckAction;
 use Domain\Deck\DTO\DeckDTO;
 use Domain\Deck\Exceptions\DeckNotFoundException;
@@ -55,10 +55,10 @@ final class DeckController extends Controller
         return redirect()->route('decks.index');
     }
 
-    public function edit(string $id, RetriveDeckAction $retriveDeckAction): View
+    public function edit(string $id, RetrieveDeckAction $retrieveDeckAction): View
     {
         try {
-            $deck = $retriveDeckAction(id: (int) $id);
+            $deck = $retrieveDeckAction(id: (int) $id);
         } catch (DeckNotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage());
         }

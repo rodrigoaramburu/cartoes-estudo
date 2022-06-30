@@ -7,7 +7,7 @@ namespace Domain\Deck\Actions;
 use Domain\Deck\DTO\DeckDTO;
 use Domain\Deck\Repositories\DeckRepositoryInterface;
 
-final class RetriveDeckAction
+final class RetrieveDeckAction
 {
     public function __construct(
         private DeckRepositoryInterface $deckRepository

@@ -4,9 +4,11 @@ namespace App\Core\Providers;
 
 use App\Core\Components\App;
 use App\Core\Components\Flash;
+use Domain\Deck\Repositories\CardRepositoryInterface;
 use Domain\Deck\Repositories\DeckRepositoryInterface;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Infrastructure\Persistence\CardRepositoryEloquent;
 use Infrastructure\Persistence\DeckRepositoryEloquent;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(DeckRepositoryInterface::class, DeckRepositoryEloquent::class);
+        $this->app->bind(CardRepositoryInterface::class, CardRepositoryEloquent::class);
     }
 
     /**
