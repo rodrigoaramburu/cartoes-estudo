@@ -27,6 +27,14 @@ final class DeckDTO
         );
     }
 
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
+
     public function id(): ?int
     {
         return $this->id;

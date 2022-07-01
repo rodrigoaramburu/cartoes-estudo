@@ -14,12 +14,21 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
 {
     public function getByDeck(DeckDTO $deck): Collection
     {
-        $cards = Card::where('deck_id', $deck->id())->get();
+        $cards = Card::where('deck_id', $deck->id())->with(['deck'])->get();
 
         $cards->transform(function ($item) {
             return CardDTO::fromArray($item->toArray());
         });
 
         return $cards;
+    }
+
+    public function save(CardDTO $card): void
+    {
+        Card::create([
+            'front' => $card->front(),
+            'back' => $card->back(),
+            'deck_id' => $card->deck()->id(),
+        ]);
     }
 }

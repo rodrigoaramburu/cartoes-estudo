@@ -27,3 +27,50 @@ test('deve listar os cards de um deck', function () {
         ->assertDontSee($cards2[0]->back)
         ->assertDontSee($cards2[1]->back);
 });
+
+test('deve exibir tela de adicionar cartão', function () {
+    $decks = Deck::factory()->times(3)->create();
+
+    $this->get(route('cards.create'))
+        ->assertStatus(200)
+        ->assertSee('name="front"', escape: false)
+        ->assertSee('name="back"', escape: false)
+        ->assertSee('name="deck_id"', escape: false)
+        ->assertSee('value="'.$decks[0]->id.'">'.$decks[0]->name.'</option>', escape: false)
+        ->assertSee('value="'.$decks[1]->id.'">'.$decks[1]->name.'</option>', escape: false);
+});
+
+test('deve salvar um card', function () {
+    $decks = Deck::factory()->times(3)->create();
+
+    $this->post(route('cards.store'), [
+        'front' => 'o texto da frente',
+        'back' => 'o texto do verso',
+        'deck_id' => $decks[0]->id,
+    ])
+        ->assertRedirect(route('cards.index', $decks[0]->id))
+        ->assertSessionHas('message-success', 'O cartão foi adicionado');
+
+    $this->assertDatabaseHas('cards', [
+        'front' => 'o texto da frente',
+        'back' => 'o texto do verso',
+        'deck_id' => $decks[0]->id,
+    ]);
+});
+
+test('não deve salvar card se não tiver frente, verso e deck', function () {
+    $this->post(route('cards.store'), [
+        'front' => '',
+        'back' => '',
+        'deck_id' => '',
+    ])
+    ->assertStatus(302)
+    ->assertSessionHasErrors(['front'=>'A frente do cartão deve ser preenchida'])
+    ->assertSessionHasErrors(['back'=>'O verso do cartão deve ser preenchido'])
+    ->assertSessionHasErrors(['deck_id'=>'O Baralho do cartão deve ser selecionado']);
+
+    $this->assertDatabaseMissing('decks', [
+        'front' => '',
+        'back' => '',
+    ]);
+});
