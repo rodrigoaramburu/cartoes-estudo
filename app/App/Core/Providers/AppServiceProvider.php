@@ -3,12 +3,12 @@
 namespace App\Core\Providers;
 
 use App\Core\Components\App;
-use App\Core\Components\Flash;
 use App\Core\Components\Editor;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
+use App\Core\Components\Flash;
 use Domain\Deck\Repositories\CardRepositoryInterface;
 use Domain\Deck\Repositories\DeckRepositoryInterface;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 use Infrastructure\Persistence\CardRepositoryEloquent;
 use Infrastructure\Persistence\DeckRepositoryEloquent;
 

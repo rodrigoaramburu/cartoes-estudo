@@ -29,3 +29,4 @@ Route::put('/decks/edit/{id}', [DeckController::class, 'update'])->name('decks.u
 Route::get('/decks/{deckId}/cards', [CardController::class, 'index'])->name('cards.index');
 Route::get('/cards/create', [CardController::class, 'create'])->name('cards.create');
 Route::post('/cards/store', [CardController::class, 'store'])->name('cards.store');
+Route::delete('/cards/{id}', [CardController::class, 'delete'])->name('cards.delete');

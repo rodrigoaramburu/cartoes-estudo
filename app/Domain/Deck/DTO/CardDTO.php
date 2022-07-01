@@ -20,7 +20,7 @@ final class CardDTO
     public static function fromArray(array $data): self
     {
         return new CardDTO(
-            id: in_array('id', $data) ? (int) $data : null,
+            id: array_key_exists('id', $data) ? (int) $data['id'] : null,
             front: $data['front'],
             back: $data['back'],
             nextRevision: in_array('next_revision', $data) ? new DateTime($data['next_revision']) : null,

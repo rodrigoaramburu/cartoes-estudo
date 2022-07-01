@@ -74,3 +74,18 @@ test('não deve salvar card se não tiver frente, verso e deck', function () {
         'back' => '',
     ]);
 });
+
+test('deve deletar um card', function () {
+    $deck = Deck::factory()->create();
+    $card = Card::factory()->create([
+        'deck_id' => $deck->id,
+    ]);
+
+    $this->delete(route('cards.delete', $card->id))
+        ->assertRedirect(route('cards.index', $deck->id))
+        ->assertSessionHas('message-success', 'O Cartão de Estudo foi deletado.');
+
+    $this->assertDatabaseMissing('cards', [
+        'id' => $card->id,
+    ]);
+});

@@ -6,6 +6,7 @@ namespace Infrastructure\Persistence;
 
 use Domain\Deck\DTO\CardDTO;
 use Domain\Deck\DTO\DeckDTO;
+use Domain\Deck\Exceptions\CardNotFoundException;
 use Domain\Deck\Models\Card;
 use Domain\Deck\Repositories\CardRepositoryInterface;
 use Illuminate\Support\Collection;
@@ -30,5 +31,23 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
             'back' => $card->back(),
             'deck_id' => $card->deck()->id(),
         ]);
+    }
+
+    public function findById(int $id): CardDTO
+    {
+        $cardModel = Card::with(['deck'])->find($id);
+        
+        if (! $cardModel) {
+            throw new CardNotFoundException('Cartão de Estudo não encontrado');
+        }
+
+        return CardDTO::fromArray(
+            data: $cardModel->toArray()
+        );
+    }
+
+    public function delete(int $id): void
+    {
+        Card::destroy($id);
     }
 }

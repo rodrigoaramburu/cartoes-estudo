@@ -7,8 +7,10 @@ namespace App\Web\Deck\Controllers;
 use App\Core\Http\Controllers\Controller;
 use App\Web\Deck\Requests\CardRequest;
 use Domain\Deck\Actions\CreateCardAction;
+use Domain\Deck\Actions\DeleteCardAction;
 use Domain\Deck\Actions\ListCardsAction;
 use Domain\Deck\Actions\ListDeckAction;
+use Domain\Deck\Actions\RetrieveCardAction;
 use Domain\Deck\Actions\RetrieveDeckAction;
 use Domain\Deck\DTO\CardDTO;
 use Illuminate\Http\RedirectResponse;
@@ -51,5 +53,16 @@ final class CardController extends Controller
         Session::flash('message-success', 'O cartão foi adicionado');
 
         return redirect()->route('cards.index', $deck->id());
+    }
+
+    public function delete(string $id, RetrieveCardAction $retrieveCardAction, DeleteCardAction $deleteCardAction): RedirectResponse
+    {
+        $card = $retrieveCardAction((int) $id);
+        
+        $deleteCardAction($card->id());
+
+        Session::flash('message-success', 'O Cartão de Estudo foi deletado.');
+
+        return redirect()->route('cards.index', $card->deck()->id());
     }
 }

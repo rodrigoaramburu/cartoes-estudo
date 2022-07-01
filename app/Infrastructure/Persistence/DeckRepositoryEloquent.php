@@ -42,7 +42,7 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
         }
 
         return DeckDTO::fromArray(
-            data: Deck::find($id)->toArray()
+            data: $deckModel->toArray()
         );
     }
 

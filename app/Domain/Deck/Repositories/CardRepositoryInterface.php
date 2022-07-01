@@ -13,4 +13,8 @@ interface CardRepositoryInterface
     public function getByDeck(DeckDTO $deck): Collection;
 
     public function save(CardDTO $card): void;
+
+    public function findById(int $id): CardDTO;
+
+    public function delete(int $id): void;
 }
