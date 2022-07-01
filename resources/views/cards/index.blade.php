@@ -8,13 +8,13 @@
         <table class="w-full">
             <tr class="bg-gray-800 text-white">
                 <th class="p-1">Frente</th>
-                <th class="p-1">Atrás</th>
+                <th class="p-1">Verso</th>
                 <th class="p-1">Próxima Revisão</th>
             </tr>
             @foreach($cards as $card)
                 <tr class="even:bg-gray-100">
-                    <td class="p-1">{{$card->front()}}</td>
-                    <td class="p-1">{{$card->back()}}</td>
+                    <td class="p-1">{{ strip_tags( str_replace('<', ' <', $card->front()))}}</td>
+                    <td class="p-1">{{strip_tags( str_replace('<', ' <',$card->back()))}}</td>
                     <td class="p-1">{{$card->nextRevision()?->format('d/m/Y h:i')}}</td>
                 </tr>
             @endforeach()

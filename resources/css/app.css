@@ -5,3 +5,27 @@
 .box-shadow{
     box-shadow: 0 0 8px rgba(0,0,0,.33);
 }
+
+.boxHtml h1{
+    font-size: 3rem;
+}
+
+.boxHtml h2{
+    font-size: 2rem;
+}
+
+.boxHtml h3{
+    font-size: 2rem;
+}
+
+.boxHtml ul, .boxHtml ol{
+    margin: 10px 10px 10px 40px;
+}
+
+.boxHtml ul li{
+    list-style-type: disc;
+}
+
+.boxHtml ol li{
+    list-style-type: decimal;
+}

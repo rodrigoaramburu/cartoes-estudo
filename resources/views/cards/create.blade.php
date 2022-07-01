@@ -20,25 +20,16 @@
                 @enderror
             </div>
 
-            <div class="mt-2">
-                <label for="front" class="blcok">Frente:</label>
-                <textarea name="front" id="front" class="w-full">{{old('front')}}</textarea>
-                
-                @error('front')
-                    <div class="text-red-600">{{$message}}</div>
-                @enderror
-            </div>
+            <x-editor 
+                name="front"
+                label="Frente:"
+            />
+            <x-editor 
+                name="back"
+                label="Verso:"
+            />
 
-            <div class="mt-2">
-                <label for="back" class="back">Verso:</label>
-                <textarea name="back" id="back" class="w-full">{{old('front')}}</textarea>
-                
-                @error('back')
-                    <div class="text-red-600">{{$message}}</div>
-                @enderror
-            </div>
-
-            <button type="submit" class="flex gap-2 items-center rounded-lg px-4 py-2 bg-green-600 hover:bg-green-500 text-white">
+            <button type="submit" class="mt-4 flex gap-2 items-center rounded-lg px-4 py-2 bg-green-600 hover:bg-green-500 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
