@@ -10,7 +10,8 @@ class Editor extends Component
 {
     public function __construct(
         public ?string $name = null,
-        public ?string $label = null
+        public ?string $label = null,
+        public ?string $value = null,
     ) {
     }
 

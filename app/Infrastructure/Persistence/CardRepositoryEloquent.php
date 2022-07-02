@@ -36,7 +36,7 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
     public function findById(int $id): CardDTO
     {
         $cardModel = Card::with(['deck'])->find($id);
-        
+
         if (! $cardModel) {
             throw new CardNotFoundException('Cartão de Estudo não encontrado');
         }
@@ -49,5 +49,19 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
     public function delete(int $id): void
     {
         Card::destroy($id);
+    }
+
+    public function update(CardDTO $card): void
+    {
+        $cardModel = Card::find($card->id());
+        if (! $cardModel) {
+            throw new CardNotFoundException('Cartão de Estudo não encontrado');
+        }
+
+        $cardModel->update([
+            'front' => $card->front(),
+            'back' => $card->back(),
+            'deck_id' => $card->deck()->id(),
+        ]);
     }
 }

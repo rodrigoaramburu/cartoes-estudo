@@ -30,3 +30,5 @@ Route::get('/decks/{deckId}/cards', [CardController::class, 'index'])->name('car
 Route::get('/cards/create', [CardController::class, 'create'])->name('cards.create');
 Route::post('/cards/store', [CardController::class, 'store'])->name('cards.store');
 Route::delete('/cards/{id}', [CardController::class, 'delete'])->name('cards.delete');
+Route::get('/cards/{id}', [CardController::class, 'edit'])->name('cards.edit');
+Route::put('/cards/{id}', [CardController::class, 'update'])->name('cards.update');

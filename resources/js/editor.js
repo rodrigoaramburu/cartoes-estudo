@@ -1,11 +1,11 @@
 
-window.editor = function(){
+window.editor = function(content){
 
     return {
         wysiwyg: null,
         content: '',
         init: function() {
-            
+            this.content = content;
             this.$refs.wysiwyg.contentDocument.querySelector('head').innerHTML += `<style>
             *, ::after, ::before {box-sizing: border-box;}
             :root {tab-size: 4;}
@@ -13,7 +13,7 @@ window.editor = function(){
             body {margin: 0px; padding: 1rem 0.5rem;}
             body {font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";}
             </style>`;
-            this.$refs.wysiwyg.contentDocument.body.innerHTML += ``;
+            this.$refs.wysiwyg.contentDocument.body.innerHTML += this.content;
             // Make editable
             this.$refs.wysiwyg.contentDocument.designMode = "on";
 

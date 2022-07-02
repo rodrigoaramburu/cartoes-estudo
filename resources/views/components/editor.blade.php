@@ -1,7 +1,7 @@
-<div class="mt-2" x-data="editor()">
+<div class="mt-2" x-data="editor('{{$value ?? old($name)}}')">
     <label for="{{$name}}" class="blcok">{{$label}}</label>
     
-    <textarea x-model="content" name="{{$name}}" id="{{$name}}" class="w-full hidden">{{old('front')}}</textarea>
+    <textarea x-model="content" name="{{$name}}" id="{{$name}}" class="w-full hidden">{{$value ?? old($name)}}</textarea>
 
     <div class="flex gap-1 mb-1 text-gray-700 text-lg">
         <button type="button" @click="format('bold')" class="border border-gray-400 p-1 rounded" title="Negrito">

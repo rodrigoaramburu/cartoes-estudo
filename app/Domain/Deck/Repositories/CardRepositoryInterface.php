@@ -17,4 +17,6 @@ interface CardRepositoryInterface
     public function findById(int $id): CardDTO;
 
     public function delete(int $id): void;
+
+    public function update(CardDTO $card): void;
 }

@@ -9,7 +9,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
-            ADICIONAR BARALHO
+            NOVO BARALHO
       </a>
    </div>
 
@@ -18,7 +18,9 @@
             <h2 class="text-xl w-full">{{$deck->name() }}</h3>
 
             <div class="flex gap-2 items-center">
-               <a href="{{route('cards.index', $deck->id())}}">Cartões</a>
+               <a href="{{route('cards.index', $deck->id())}}" class="inline-block bg-gray-700 hover:bg-gray-600 transition rounded-lg p-2 text-white" title="Visualizar Cartões do Baralho">
+                  <svg class="text-white bg-gray-700" width="24" height="24" version="1.1" viewBox="0 0 6.35 6.35" xmlns="http://www.w3.org/2000/svg"><g stroke="currentColor"><rect x="1.0329" y="1.7623" width="4.9657" height="3.4451" ry=".75307" fill="none" stroke-width=".30924"/><rect x=".52867" y=".99362" width="4.9657" height="3.4451" ry=".75307" fill="#374151" stroke-width=".30924"/><g transform="translate(.026836)" fill="none" stroke-width=".26458px"><path d="m1.0061 1.7623 3.2947-0.0097784"/><path d="m1.0014 2.5394h2.6824"/><path d="m1.0014 3.4335h3.0401"/></g></g></svg>
+               </a>
                <a href="{{route('decks.edit', $deck->id())}}" class="inline-block bg-gray-700 hover:bg-gray-600 transition rounded-lg p-2 text-white" title="Editar o Baralho">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
