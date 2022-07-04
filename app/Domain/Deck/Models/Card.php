@@ -21,7 +21,7 @@ final class Card extends Model
     ];
 
     protected $casts = [
-        'next_revision' =>  DateTime::class,
+        'next_revision' =>  'datetime',
     ];
 
     public function deck(): BelongsTo

@@ -32,3 +32,6 @@ Route::post('/cards/store', [CardController::class, 'store'])->name('cards.store
 Route::delete('/cards/{id}', [CardController::class, 'delete'])->name('cards.delete');
 Route::get('/cards/{id}', [CardController::class, 'edit'])->name('cards.edit');
 Route::put('/cards/{id}', [CardController::class, 'update'])->name('cards.update');
+
+Route::get('/decks/{idDeck}/revision', [CardController::class, 'nextRevision'])->name('cards.next-revision');
+Route::post('/decks/{idDeck}/revision', [CardController::class, 'nextRevisionStore'])->name('cards.nex-revision-store');

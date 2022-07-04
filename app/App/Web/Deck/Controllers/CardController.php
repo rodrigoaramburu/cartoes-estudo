@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace App\Web\Deck\Controllers;
 
-use App\Core\Http\Controllers\Controller;
+use Illuminate\View\View;
+use Domain\Deck\DTO\CardDTO;
+use Illuminate\Http\Request;
+use Domain\Deck\DTO\RevisionStatus;
+use Illuminate\Http\RedirectResponse;
 use App\Web\Deck\Requests\CardRequest;
+use Domain\Deck\Actions\ListDeckAction;
+use Illuminate\Support\Facades\Session;
+use Domain\Deck\Actions\ListCardsAction;
+use App\Core\Http\Controllers\Controller;
 use Domain\Deck\Actions\CreateCardAction;
 use Domain\Deck\Actions\DeleteCardAction;
-use Domain\Deck\Actions\ListCardsAction;
-use Domain\Deck\Actions\ListDeckAction;
+use Domain\Deck\Actions\UpdateCardAction;
 use Domain\Deck\Actions\RetrieveCardAction;
 use Domain\Deck\Actions\RetrieveDeckAction;
-use Domain\Deck\Actions\UpdateCardAction;
-use Domain\Deck\DTO\CardDTO;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Session;
-use Illuminate\View\View;
+use Domain\Deck\Actions\NextCardRevisionAction;
+use Domain\Deck\Actions\UpdateNextRevisionAction;
 
 final class CardController extends Controller
 {
@@ -93,5 +97,28 @@ final class CardController extends Controller
         Session::flash('message-success', 'O Cartão de Estudos foi alterado');
 
         return redirect()->route('cards.index', $deck->id());
+    }  
+
+    public function nextRevision (string $idDeck, NextCardRevisionAction $nextCardRevision): View
+    {
+        $card = $nextCardRevision( (int) $idDeck);
+        return view('cards.card-revision', compact('card'));
+    }
+
+    public function nextRevisionStore(
+        Request $request, 
+        string $id, 
+        RetrieveCardAction $retrieveCardAction,
+        UpdateNextRevisionAction $updateNextRevision
+    ): RedirectResponse
+    {
+        $card = $retrieveCardAction( (int) $id);
+
+        $updateNextRevision( 
+            card: $card,
+            revisionStatus: RevisionStatus::from($request->input('revision-status'))
+        );
+
+        return redirect()->route('cards.next-revision', $card->deck()->id());
     }
 }

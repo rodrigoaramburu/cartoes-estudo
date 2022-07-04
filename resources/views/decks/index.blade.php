@@ -18,6 +18,12 @@
             <h2 class="text-xl w-full">{{$deck->name() }}</h3>
 
             <div class="flex gap-2 items-center">
+               <a href="{{route('cards.next-revision', $deck->id())}}" class="flex gap-2 inline-block bg-green-700 hover:bg-green-600 transition rounded-lg p-2 text-white" title="Revisar">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  Revisar
+               </a>
                <a href="{{route('cards.index', $deck->id())}}" class="inline-block bg-gray-700 hover:bg-gray-600 transition rounded-lg p-2 text-white" title="Visualizar Cartões do Baralho">
                   <svg class="text-white bg-gray-700" width="24" height="24" version="1.1" viewBox="0 0 6.35 6.35" xmlns="http://www.w3.org/2000/svg"><g stroke="currentColor"><rect x="1.0329" y="1.7623" width="4.9657" height="3.4451" ry=".75307" fill="none" stroke-width=".30924"/><rect x=".52867" y=".99362" width="4.9657" height="3.4451" ry=".75307" fill="#374151" stroke-width=".30924"/><g transform="translate(.026836)" fill="none" stroke-width=".26458px"><path d="m1.0061 1.7623 3.2947-0.0097784"/><path d="m1.0014 2.5394h2.6824"/><path d="m1.0014 3.4335h3.0401"/></g></g></svg>
                </a>
