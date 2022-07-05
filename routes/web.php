@@ -15,10 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [DeckController::class, 'index'])->name('decks.index');
 Route::get('/decks', [DeckController::class, 'index'])->name('decks.index');
 Route::get('/decks/create', [DeckController::class, 'create'])->name('decks.create');
 Route::post('/decks/store', [DeckController::class, 'store'])->name('decks.store');
