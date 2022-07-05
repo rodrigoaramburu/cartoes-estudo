@@ -1,5 +1,6 @@
 <?php
 
+use Domain\Deck\Models\Card;
 use Domain\Deck\Models\Deck;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -140,4 +141,31 @@ test('deve alterar um deck com nome já existe mas é o proprio', function () {
         'id' => $deck->id,
         'name' => $deck->name,
     ]);
+});
+
+
+test('deve exportar baralho', function(){
+    $deck = Deck::factory()->create();
+    $cards = Card::factory()->times(3)->create([
+        'deck_id' => $deck->id
+    ]);
+    
+    $response = $this->get( route('decks.export', $deck->id))
+        ->assertStatus(200);
+
+
+    $tmpfname = tempnam ("/tmp", "tmpzip");
+    file_put_contents($tmpfname, $response->content());
+
+    $zip = new ZipArchive();
+    $zip->open( $tmpfname);
+    $deckJson = json_decode( $zip->getFromName('deck.json'), true);
+    unlink($tmpfname);
+    
+    expect($deckJson['deck'])->toBe($deck->name);
+    expect($deckJson['cards'][0]['front'])->toBe($cards[0]->front);
+    expect($deckJson['cards'][0]['back'])->toBe($cards[0]->back);
+    expect($deckJson['cards'][1]['front'])->toBe($cards[1]->front);
+    expect($deckJson['cards'][1]['back'])->toBe($cards[1]->back);
+
 });

@@ -6,8 +6,9 @@ namespace Domain\Deck\DTO;
 
 use DateTime;
 use DateTimeZone;
+use JsonSerializable;
 
-final class CardDTO
+final class CardDTO implements JsonSerializable
 {
     public function __construct(
         private string $front,
@@ -29,6 +30,14 @@ final class CardDTO
                             : null,
             deck: DeckDTO::fromArray($data['deck'])
         );
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'front' => $this->front(),
+            'back' => $this->back(),
+        ];
     }
 
     public function id(): ?int

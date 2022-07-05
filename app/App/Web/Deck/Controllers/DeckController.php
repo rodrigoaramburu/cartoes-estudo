@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace App\Web\Deck\Controllers;
 
-use App\Core\Http\Controllers\Controller;
-use App\Web\Deck\Requests\DeckRequest;
-use Domain\Deck\Actions\CreateDeckAction;
-use Domain\Deck\Actions\DeleteDeckAction;
-use Domain\Deck\Actions\ListDeckAction;
-use Domain\Deck\Actions\RetrieveDeckAction;
-use Domain\Deck\Actions\UpdateDeckAction;
+use Illuminate\Support\Str;
 use Domain\Deck\DTO\DeckDTO;
-use Domain\Deck\Exceptions\DeckNotFoundException;
+use Illuminate\Http\Response;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use App\Web\Deck\Requests\DeckRequest;
+use Domain\Deck\Actions\ListDeckAction;
 use Illuminate\Support\Facades\Session;
+use App\Core\Http\Controllers\Controller;
+use Domain\Deck\Actions\CreateDeckAction;
+use Domain\Deck\Actions\DeleteDeckAction;
+use Domain\Deck\Actions\ExportDeckAction;
+use Domain\Deck\Actions\UpdateDeckAction;
+use Domain\Deck\Actions\RetrieveDeckAction;
+use Domain\Deck\Exceptions\DeckNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class DeckController extends Controller
@@ -66,7 +69,7 @@ final class DeckController extends Controller
         return view('decks.edit', compact('deck'));
     }
 
-    public function update(DeckRequest $request, string $id, UpdateDeckAction $updateDeckAction): RedirectResponse
+    public function update(DeckRequest $request, UpdateDeckAction $updateDeckAction): RedirectResponse
     {
         $updateDeckAction(
             DeckDTO::fromArray($request->only(['id', 'name']))
@@ -75,5 +78,24 @@ final class DeckController extends Controller
         Session::flash('message-success', 'O Baralho foi alterado');
 
         return redirect()->route('decks.index');
+    }
+
+    public function export(
+        string $id, 
+        RetrieveDeckAction $retrieveDeckAction, 
+        ExportDeckAction $exportDeckAction
+    ): Response
+    {
+        $deck = $retrieveDeckAction((int) $id);
+        $content = $exportDeckAction($deck);
+        
+        return response(
+            content: $content,
+            status: 200,
+            headers: [
+                'Content-type' => 'application/zip',
+                'Content-disposition' => "attachment; filename=\"" . Str::slug($deck->name() ) . ".zdeck\""
+            ]
+        );
     }
 }
