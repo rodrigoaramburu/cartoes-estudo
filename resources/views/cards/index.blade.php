@@ -16,7 +16,7 @@
                 <tr class="even:bg-gray-100">
                     <td class="p-1">{{ strip_tags( str_replace('<', ' <', $card->front()))}}</td>
                     <td class="p-1">{{strip_tags( str_replace('<', ' <',$card->back()))}}</td>
-                    <td class="p-1">{{$card->nextRevision()?->format('d/m/Y H:i')}}</td>
+                    <td class="p-1">{{$card->nextRevision()?->format('d/m/Y H:i') ?? '-'}}</td>
                     <td class="p-1">
                         <div class="flex gap-1 justify-end">
                             <a href="{{route('cards.edit', $card->id())}}" class="inline-block bg-gray-700 hover:bg-gray-600 transition rounded-lg p-2 text-white" title="Alterar Cartão">

@@ -15,7 +15,7 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
 {
     public function getByDeck(DeckDTO $deck): Collection
     {
-        $cards = Card::where('deck_id', $deck->id())->with(['deck'])->get();
+        $cards = Card::where('deck_id', $deck->id())->with(['deck'])->orderBy('next_revision')->get();
 
         $cards->transform(function ($item) {
             return CardDTO::fromArray($item->toArray());
