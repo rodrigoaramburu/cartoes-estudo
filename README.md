@@ -8,11 +8,18 @@ O projeto foi desenvolvido em Laravel, como exercício e para uso pessoal.
 
 ## Execução 
 
-Para instalar copie o `.env.example` para `.env` altere os dados de acesso ao banco e execute.
+Para instalar copie o `.env.example` para `.env` e altere os dados de acesso ao banco.
 
-```php
-php artisan migrate
+Execute:
 ```
+composer install
+
+php artisan key:generate
+php artisan migrate
+
+npm install
+npm run build
+``` 
 
 Para executar:
 
