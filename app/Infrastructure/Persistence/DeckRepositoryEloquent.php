@@ -24,9 +24,10 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
 
     public function save(DeckDTO $deck): void
     {
-        Deck::create([
+        $deckModel = Deck::create([
             'name' => $deck->name(),
         ]);
+        $deck->changeId($deckModel->id);
     }
 
     public function delete(int $id): void

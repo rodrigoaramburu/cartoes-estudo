@@ -40,6 +40,11 @@ final class DeckDTO
         return $this->id;
     }
 
+    public function changeId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function name(): string
     {
         return $this->name;

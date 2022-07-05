@@ -6,6 +6,7 @@ namespace App\Web\Deck\Controllers;
 
 use Illuminate\Support\Str;
 use Domain\Deck\DTO\DeckDTO;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +19,9 @@ use Domain\Deck\Actions\DeleteDeckAction;
 use Domain\Deck\Actions\ExportDeckAction;
 use Domain\Deck\Actions\UpdateDeckAction;
 use Domain\Deck\Actions\RetrieveDeckAction;
+use Domain\Deck\Actions\ImportarBaralhoAction;
 use Domain\Deck\Exceptions\DeckNotFoundException;
+use Domain\Deck\Exceptions\DeckInvalidFormatException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class DeckController extends Controller
@@ -81,21 +84,33 @@ final class DeckController extends Controller
     }
 
     public function export(
-        string $id, 
-        RetrieveDeckAction $retrieveDeckAction, 
+        string $id,
+        RetrieveDeckAction $retrieveDeckAction,
         ExportDeckAction $exportDeckAction
-    ): Response
-    {
+    ): Response {
         $deck = $retrieveDeckAction((int) $id);
         $content = $exportDeckAction($deck);
-        
+
         return response(
             content: $content,
             status: 200,
             headers: [
                 'Content-type' => 'application/zip',
-                'Content-disposition' => "attachment; filename=\"" . Str::slug($deck->name() ) . ".zdeck\""
+                'Content-disposition' => 'attachment; filename="'.Str::slug($deck->name()).'.zdeck"',
             ]
         );
+    }
+
+    public function import(Request $request, ImportarBaralhoAction $importarBaralhoAction): RedirectResponse
+    {
+        try {
+            $importarBaralhoAction(path: $request->file('deck-file')->getRealPath());
+        } catch (DeckInvalidFormatException $e) {
+            Session::flash('message-error', $e->getMessage());
+        }
+
+        Session::flash('message-success', 'O Baralho foi importado com sucesso.');
+
+        return redirect()->route('decks.index');
     }
 }

@@ -133,14 +133,11 @@ test('deve alterar um cartão de estudo', function () {
     ]);
 });
 
-
 test('não deve alterar cartão de estudo se não tiver frente, verso e deck', function () {
-
     $decks = Deck::factory()->times(2)->create();
     $card = Card::factory()->create([
         'deck_id' => $decks[0]->id,
     ]);
-
 
     $this->put(route('cards.update', $card->id), [
         'id' => $card->id,

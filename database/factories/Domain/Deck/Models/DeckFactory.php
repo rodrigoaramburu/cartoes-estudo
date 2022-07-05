@@ -17,7 +17,7 @@ class DeckFactory extends Factory
     public function definition()
     {
         return [
-            'name' => str_replace( "'","", fake()->name()),
+            'name' => str_replace("'", '', fake()->name()),
         ];
     }
 }

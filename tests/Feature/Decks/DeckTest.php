@@ -3,6 +3,7 @@
 use Domain\Deck\Models\Card;
 use Domain\Deck\Models\Deck;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 
 uses(RefreshDatabase::class);
 
@@ -143,29 +144,71 @@ test('deve alterar um deck com nome já existe mas é o proprio', function () {
     ]);
 });
 
-
-test('deve exportar baralho', function(){
+test('deve exportar baralho', function () {
     $deck = Deck::factory()->create();
     $cards = Card::factory()->times(3)->create([
-        'deck_id' => $deck->id
+        'deck_id' => $deck->id,
     ]);
-    
-    $response = $this->get( route('decks.export', $deck->id))
+
+    $response = $this->get(route('decks.export', $deck->id))
         ->assertStatus(200);
 
-
-    $tmpfname = tempnam ("/tmp", "tmpzip");
+    $tmpfname = tempnam('/tmp', 'tmpzip');
     file_put_contents($tmpfname, $response->content());
 
     $zip = new ZipArchive();
-    $zip->open( $tmpfname);
-    $deckJson = json_decode( $zip->getFromName('deck.json'), true);
+    $zip->open($tmpfname);
+    $deckJson = json_decode($zip->getFromName('deck.json'), true);
     unlink($tmpfname);
-    
+
     expect($deckJson['deck'])->toBe($deck->name);
     expect($deckJson['cards'][0]['front'])->toBe($cards[0]->front);
     expect($deckJson['cards'][0]['back'])->toBe($cards[0]->back);
     expect($deckJson['cards'][1]['front'])->toBe($cards[1]->front);
     expect($deckJson['cards'][1]['back'])->toBe($cards[1]->back);
+});
 
+test('deve importar um baralho', function () {
+    $data = json_encode([
+        'deck' => 'Deck Teste',
+        'cards' => [
+            ['front'=> 'front1', 'back'=> 'back1'],
+            ['front'=> 'front2', 'back'=> 'back2'],
+        ],
+    ]);
+
+    $tmpfname = tempnam('/tmp', 'tmpzip');
+    $zip = new ZipArchive();
+    $zip->open($tmpfname, ZipArchive::CREATE);
+    $zip->addFromString('deck.json', $data);
+    $zip->close();
+
+    $this->post(route('decks.import'), [
+        'deck-file' =>  new UploadedFile($tmpfname, 'deck-1.zdeck'),
+    ])
+        ->assertRedirect(route('decks.index'))
+        ->assertSessionHas('message-success', 'O Baralho foi importado com sucesso.');
+
+    unlink($tmpfname);
+
+    $this->assertDatabaseHas('decks', [
+        'name' => 'Deck Teste',
+    ]);
+
+    $this->assertDatabaseHas('cards', [
+        'front' => 'front1', 'back' => 'back1', 'deck_id' => 1,
+    ]);
+});
+
+test('deve exibir mensagem se formato de baralho inválido ao importa', function () {
+    $tmpfname = tempnam('/tmp', 'tmptext');
+    file_put_contents($tmpfname, 'um teste qualquer');
+
+    $this->post(route('decks.import'), [
+        'deck-file' =>  new UploadedFile($tmpfname, 'deck-1.zdeck'),
+    ])
+    ->assertRedirect(route('decks.index'))
+    ->assertSessionHas('message-error', 'Error ao Importar Baralho: Formato de Arquivo Inválido');
+
+    unlink($tmpfname);
 });

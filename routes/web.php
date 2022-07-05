@@ -27,6 +27,7 @@ Route::get('/decks/edit/{id}', [DeckController::class, 'edit'])->name('decks.edi
 Route::put('/decks/edit/{id}', [DeckController::class, 'update'])->name('decks.update');
 
 Route::get('/decks/{id}/export', [DeckController::class, 'export'])->name('decks.export');
+Route::post('/decks/import', [DeckController::class, 'import'])->name('decks.import');
 
 Route::get('/decks/{deckId}/cards', [CardController::class, 'index'])->name('cards.index');
 Route::get('/cards/create', [CardController::class, 'create'])->name('cards.create');

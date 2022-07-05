@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -12,16 +12,16 @@ final class UpdateNextRevisionAction
 {
     public function __construct(
         private CardRepositoryInterface $cardRepository
-    ){}
+    ) {
+    }
 
     public function __invoke(CardDTO $card, RevisionStatus $revisionStatus): void
     {
-        $data = match($revisionStatus){
+        $data = match ($revisionStatus) {
             RevisionStatus::ERROR => (new \DateTime('now'))->modify('+1 hour'),
             RevisionStatus::HARD => (new \DateTime('now'))->modify('+1 day'),
             RevisionStatus::NORMAL => (new \DateTime('now'))->modify('+2 days'),
             RevisionStatus::EASY => (new \DateTime('now'))->modify('+4 days'),
-
         };
 
         $card->changeNextRevision($data);
@@ -29,4 +29,3 @@ final class UpdateNextRevisionAction
         $this->cardRepository->update($card);
     }
 }
-

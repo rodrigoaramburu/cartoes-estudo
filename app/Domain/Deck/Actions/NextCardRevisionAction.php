@@ -6,8 +6,6 @@ namespace Domain\Deck\Actions;
 
 use DateTime;
 use Domain\Deck\DTO\CardDTO;
-use Domain\Deck\DTO\DeckDTO;
-use Illuminate\Support\Collection;
 use Domain\Deck\Repositories\CardRepositoryInterface;
 use Domain\Deck\Repositories\DeckRepositoryInterface;
 
@@ -25,12 +23,11 @@ final class NextCardRevisionAction
 
         $cards = $this->cardRepository->getByDeck(deck: $deck);
 
-
         return $cards
-            ->filter(function($item){
+            ->filter(function ($item) {
                 return $item->nextRevision() < new DateTime('now') || $item->nextRevision() === null;
             })
-            ->sortBy(function($a){
+            ->sortBy(function ($a) {
                 return $a->nextRevision() ?? new DateTime('now');
             })->first();
     }

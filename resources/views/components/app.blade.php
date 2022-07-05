@@ -29,7 +29,18 @@
                         href="{{route('decks.index')}}" 
                         class="inline-block px-4 py-2 rounded font-bold hover:bg-gray-600 {{ request()->route()->getName() == 'decks.index'? 'bg-gray-600': ''}}">
                         BARALHOS
-                    </a>                
+                    </a> 
+                    
+                    <form method="POST" action="{{route('decks.import')}}" enctype="multipart/form-data" x-data="{}" x-ref="form">
+                        @csrf
+                        <input type="file" name="deck-file" @change="$refs.form.submit()" x-ref="file" class="hidden">
+                        <button type="button" @click="$refs.file.click()" class="flex gap-1 items-center inline-block px-4 py-2 rounded font-bold hover:bg-gray-600">
+                            <svg class="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m17 9v-2h1c1.6569 0 3 1.3431 3 3v8c0 1.6569-1.3431 3-3 3h-12c-1.6569 0-3-1.3431-3-3v-8c0-1.6569 1.3431-3 3-3h1v2h-1c-0.55228 0-1 0.44772-1 1v8c0 0.55228 0.44772 1 1 1h12c0.55228 0 1-0.44772 1-1v-8c0-0.55228-0.44772-1-1-1h-1zm-3.9552 2.0473 1.1716-1.1577c0.40803-0.4032 1.0696-0.4032 1.4776 0 0.40803 0.4032 0.40803 1.0569 0 1.4601l-3.694 3.6503-3.694-3.6503c-0.40803-0.4032-0.40803-1.0569 0-1.4601 0.40803-0.4032 1.0696-0.4032 1.4776 0l1.1716 1.1577v-8.0148c0-0.57022 0.46778-1.0325 1.0448-1.0325s1.0448 0.46225 1.0448 1.0325v8.0148z" fill-rule="evenodd"/>
+                            </svg>
+                            Importar Baralho
+                        </button>
+                    </form>
                                     
                 </nav>
             </div>
