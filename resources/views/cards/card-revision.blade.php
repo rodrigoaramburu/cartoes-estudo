@@ -7,12 +7,12 @@
             <div class="w-[600px] h-[400px] group perspective mb-4">
                 <div class="relative preserve-3d duration-1000 box-shadow  w-full h-full" :class="flip ? 'my-rotate-y-180':''">
                     <div class="absolute w-full h-full backface-hidden p-1">
-                        <div class="border border-2 border-green-400 p-4 w-full h-full bg-white">
+                        <div class="border border-2 border-green-400 p-4 w-full h-full bg-white overflow-y-auto">
                             {!!$card->front()!!}
                         </div>
                     </div>
                     <div class="absolute my-rotate-y-180 w-full h-full backface-hidden p-1">
-                        <div class="border border-2 border-green-400 p-4 w-full h-full bg-white">
+                        <div class="border border-2 border-green-400 p-4 w-full h-full bg-white overflow-y-auto">
                             {!!$card->back()!!}
                         </div>
                     </div>
