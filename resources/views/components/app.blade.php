@@ -12,7 +12,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="text-gray-900">
+    <body class="text-gray-900  bg-gray-100">
         <header class="bg-gray-800">
             <div class="container p-4 mx-auto text-white flex justify-between items-center">
                 <h1 class="text-xl">Cartões de Estudo</h1>
