@@ -1,8 +1,11 @@
 <x-app :deck="$card?->deck()">
 
-    <div class="flex flex-col justify-center items-center w-full h-full p-4" x-data="{flip: false}">
+    
+    <div class="flex flex-col justify-center items-center w-full h-full p-1" x-data="{flip: false}">
         
         @if($card)
+        <h2 class="text-lg font-bold text-center mb-2">{{$card->deck()->name()}}</h2>
+        
             <div class="w-[600px] h-[400px] group perspective mb-4">
                 <div class="relative preserve-3d duration-1000 box-shadow  w-full h-full" :class="flip ? 'my-rotate-y-180':''">
                     <div class="absolute w-full h-full backface-hidden p-1">
