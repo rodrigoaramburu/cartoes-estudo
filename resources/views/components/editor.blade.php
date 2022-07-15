@@ -4,6 +4,11 @@
     <textarea x-model="content" name="{{$name}}" id="{{$name}}" class="w-full hidden">{{$value ?? old($name)}}</textarea>
 
     <div class="flex gap-1 mb-1 text-gray-700 text-lg">
+        <button type="button" @click="format('removeFormat')" class="border border-gray-400 p-1 rounded" title="REmover Formatação">
+            <svg class="w-5 h-5 text-gray-700" version="1.1" viewBox="0 0 299.29 299.29" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+                <path d="m290.42 79.244-70.388-70.387c-11.794-11.795-30.986-11.795-42.78 0l-168.39 168.39c-11.822 11.821-11.824 30.957 0 42.78l70.388 70.388c11.821 11.822 30.957 11.824 42.78 0l168.39-168.39c11.821-11.821 11.823-30.958-1e-3 -42.78zm-180.06 199.5c-5.374 5.373-14.071 5.373-19.446 0l-70.388-70.388c-5.373-5.374-5.375-14.071 0-19.446l34.61-34.61 89.834 89.834-34.61 34.61zm168.39-168.39-122.11 122.11-89.833-89.833 122.11-122.11c5.374-5.374 14.071-5.374 19.446 0l70.388 70.388c5.374 5.374 5.374 14.072 0 19.446z"/>
+            </svg>
+        </button>
         <button type="button" @click="format('bold')" class="border border-gray-400 p-1 rounded" title="Negrito">
             <svg class="w-5 h-5 text-gray-700" fill="none" height="256" viewBox="0 0 256 256" width="256" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M56 40V216H148C176.719 216 200 192.719 200 164C200 147.849 192.637 133.418 181.084 123.88C187.926 115.076 192 104.014 192 92C192 63.2812 168.719 40 140 40H56ZM88 144V184H148C159.046 184 168 175.046 168 164C168 152.954 159.046 144 148 144H88ZM88 112V72H140C151.046 72 160 80.9543 160 92C160 103.046 151.046 112 140 112H88Z" fill="currentColor" fill-rule="evenodd"/></svg>
         </button>
@@ -36,6 +41,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
+        </button>
+
+        <button type="button" @click="code()" class="border border-gray-400 p-1 rounded text-sm">
+            code
         </button>
     </div>
 
