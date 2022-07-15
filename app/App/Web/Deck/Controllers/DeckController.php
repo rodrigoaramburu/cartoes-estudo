@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace App\Web\Deck\Controllers;
 
-use Illuminate\Support\Str;
-use Domain\Deck\DTO\DeckDTO;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use App\Web\Deck\Requests\DeckRequest;
-use Domain\Deck\Actions\ListDeckAction;
-use Illuminate\Support\Facades\Session;
 use App\Core\Http\Controllers\Controller;
+use App\Web\Deck\Requests\DeckRequest;
 use Domain\Deck\Actions\CreateDeckAction;
 use Domain\Deck\Actions\DeleteDeckAction;
 use Domain\Deck\Actions\ExportDeckAction;
-use Domain\Deck\Actions\UpdateDeckAction;
-use Domain\Deck\Actions\RetrieveDeckAction;
 use Domain\Deck\Actions\ImportarBaralhoAction;
-use Domain\Deck\Exceptions\DeckNotFoundException;
+use Domain\Deck\Actions\ListDeckAction;
+use Domain\Deck\Actions\RetrieveDeckAction;
+use Domain\Deck\Actions\UpdateDeckAction;
+use Domain\Deck\DTO\DeckDTO;
 use Domain\Deck\Exceptions\DeckInvalidFormatException;
+use Domain\Deck\Exceptions\DeckNotFoundException;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class DeckController extends Controller

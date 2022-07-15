@@ -157,8 +157,7 @@ test('não deve alterar cartão de estudo se não tiver frente, verso e deck', f
     ]);
 });
 
-
-test('deve selecionar deck ao adicionar se passado por url query', function(){
+test('deve selecionar deck ao adicionar se passado por url query', function () {
     $decks = Deck::factory()->times(3)->create();
 
     $this->get(route('cards.create', ['deck' => $decks[2]->id]))
@@ -168,6 +167,5 @@ test('deve selecionar deck ao adicionar se passado por url query', function(){
         ->assertSee('name="deck_id"', escape: false)
         ->assertSee("value=\"{$decks[0]->id}\">{$decks[0]->name}</option>", escape: false)
         ->assertSee("value=\"{$decks[1]->id}\">{$decks[1]->name}</option>", escape: false)
-        ->assertSee("selected value=\"{$decks[2]->id}\">{$decks[2]->name}</option>", escape: false)
-        ;
+        ->assertSee("selected value=\"{$decks[2]->id}\">{$decks[2]->name}</option>", escape: false);
 });
