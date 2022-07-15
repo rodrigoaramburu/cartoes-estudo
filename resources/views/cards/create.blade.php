@@ -12,7 +12,7 @@
                 <label for="deck_id" class="blcok">Baralho:</label>
                 <select name="deck_id" id="deck_id" class="w-full">
                     @foreach($decks as $deck)
-                        <option {{$deck->id() == old('deck_id') ? 'selected' : ''}} value="{{$deck->id()}}">{{$deck->name()}}</option>
+                        <option {{$deck->id() == old('deck_id') || request()->input('deck') == $deck->id() ? 'selected' : ''}} value="{{$deck->id()}}">{{$deck->name()}}</option>
                     @endforeach
                 </select>
                 @error('deck_id')

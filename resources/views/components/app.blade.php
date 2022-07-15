@@ -18,7 +18,7 @@
                 <h1 class="text-xl">Cartões de Estudo</h1>
                 <nav class="flex gap-2 items-center">
                     <a 
-                        href="{{route('cards.create')}}" 
+                        href="{{route('cards.create', ['deck'=> $deck?->id() ] ) }}" 
                         class="flex gap-1 items-center inline-block px-4 py-2 rounded font-bold hover:bg-gray-600 {{ request()->route()->getName() == 'cards.index'? 'bg-gray-600': ''}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />

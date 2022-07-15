@@ -1,4 +1,4 @@
-<x-app>
+<x-app :deck="$deck">
 
     <h2 class="text-4xl text-bold my-4">Cartões do Baralho: {{$deck->name()}}</h2>
 
