@@ -8,8 +8,16 @@ use Illuminate\View\Component;
 
 class App extends Component
 {
+    public function __construct(
+        private  $deck = null
+    ) {
+    }
+
     public function render()
     {
-        return view('components.app');
+        //dd($this->deck);
+        return view('components.app', [
+            'deck' => $this->deck,
+        ]);
     }
 }

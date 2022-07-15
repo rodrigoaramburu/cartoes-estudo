@@ -15,6 +15,7 @@ window.editor = function(content){
             html {line-height: 1.15;text-size-adjust: 100%;}
             body {margin: 0px; padding: 1rem 0.5rem;}
             body {font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";}
+            code{ background: #EEE; padding: 2px; display: inline-block; }
             </style>`;
             this.$refs.wysiwyg.contentDocument.body.innerHTML += this.content;
             // Make editable
@@ -51,6 +52,11 @@ window.editor = function(content){
             
             this.fileImageInput.click();
 
+        },
+
+        code: function (){
+            const selection = this.$refs.wysiwyg.contentDocument.getSelection();
+            this.$refs.wysiwyg.contentDocument.execCommand("insertHTML", false ,`<code>${selection}</code>`);
         }
         
     }

@@ -13,6 +13,7 @@ use Domain\Deck\Actions\ListDeckAction;
 use Domain\Deck\Actions\NextCardRevisionAction;
 use Domain\Deck\Actions\RetrieveCardAction;
 use Domain\Deck\Actions\RetrieveDeckAction;
+use Domain\Deck\Actions\TotalCardsToRevise;
 use Domain\Deck\Actions\UpdateCardAction;
 use Domain\Deck\Actions\UpdateNextRevisionAction;
 use Domain\Deck\DTO\CardDTO;
@@ -99,11 +100,15 @@ final class CardController extends Controller
         return redirect()->route('cards.index', $deck->id());
     }
 
-    public function nextRevision(string $idDeck, NextCardRevisionAction $nextCardRevision): View
-    {
+    public function nextRevision(
+        string $idDeck,
+        NextCardRevisionAction $nextCardRevision,
+        TotalCardsToRevise $totalCardsToRevise
+        ): View {
         $card = $nextCardRevision((int) $idDeck);
+        $totalCards = $totalCardsToRevise((int) $idDeck);
 
-        return view('cards.card-revision', compact('card'));
+        return view('cards.card-revision', compact('card', 'totalCards'));
     }
 
     public function nextRevisionStore(

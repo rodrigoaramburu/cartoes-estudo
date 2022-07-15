@@ -29,3 +29,6 @@
 .boxHtml ol li{
     list-style-type: decimal;
 }
+
+
+code{ background: #EEE; padding: 2px; display: inline-block; }
