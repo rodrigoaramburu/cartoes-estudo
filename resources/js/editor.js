@@ -13,7 +13,7 @@ window.editor = function(content){
             *, ::after, ::before {box-sizing: border-box;}
             :root {tab-size: 4;}
             html {line-height: 1.15;text-size-adjust: 100%;}
-            body {margin: 0px; padding: 1rem 0.5rem;}
+            body {margin: 0px; padding: 1rem 0.5rem; background:#FFF}
             body {font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";}
             code{ background: #EEE; padding: 2px; display: inline-block; }
             </style>`;
