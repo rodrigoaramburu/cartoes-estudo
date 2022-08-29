@@ -17,10 +17,11 @@ final class Card extends Model
         'front',
         'back',
         'next_revision',
+        'last_interval',
     ];
 
     protected $casts = [
-        'next_revision' =>  'datetime',
+        'next_revision' => 'datetime',
     ];
 
     public function deck(): BelongsTo

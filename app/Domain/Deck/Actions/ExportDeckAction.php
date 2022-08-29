@@ -23,6 +23,9 @@ final class ExportDeckAction
 
         $data = json_encode([
             'deck' => $deck->name(),
+            'hardIntervalFactor' => $deck->hardIntervalFactor(),
+            'normalIntervalFactor' => $deck->normalIntervalFactor(),
+            'easyIntervalFactor' => $deck->easyIntervalFactor(),
             'cards' => $cards,
         ]);
 

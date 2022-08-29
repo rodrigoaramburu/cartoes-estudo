@@ -9,7 +9,7 @@ use App\Web\Deck\Requests\DeckRequest;
 use Domain\Deck\Actions\CreateDeckAction;
 use Domain\Deck\Actions\DeleteDeckAction;
 use Domain\Deck\Actions\ExportDeckAction;
-use Domain\Deck\Actions\ImportarBaralhoAction;
+use Domain\Deck\Actions\ImportDeckAction;
 use Domain\Deck\Actions\ListDeckAction;
 use Domain\Deck\Actions\RetrieveDeckAction;
 use Domain\Deck\Actions\UpdateDeckAction;
@@ -75,7 +75,13 @@ final class DeckController extends Controller
     public function update(DeckRequest $request, UpdateDeckAction $updateDeckAction): RedirectResponse
     {
         $updateDeckAction(
-            DeckDTO::fromArray($request->only(['id', 'name']))
+            DeckDTO::fromArray($request->only([
+                'id',
+                'name',
+                'hard_interval_factor',
+                'normal_interval_factor',
+                'easy_interval_factor',
+            ]))
         );
 
         Session::flash('message-success', 'O Baralho foi alterado');
@@ -101,10 +107,10 @@ final class DeckController extends Controller
         );
     }
 
-    public function import(Request $request, ImportarBaralhoAction $importarBaralhoAction): RedirectResponse
+    public function import(Request $request, ImportDeckAction $importDeckAction): RedirectResponse
     {
         try {
-            $importarBaralhoAction(path: $request->file('deck-file')->getRealPath());
+            $importDeckAction(path: $request->file('deck-file')->getRealPath());
         } catch (DeckInvalidFormatException $e) {
             Session::flash('message-error', $e->getMessage());
         }

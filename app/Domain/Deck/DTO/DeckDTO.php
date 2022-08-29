@@ -12,6 +12,9 @@ final class DeckDTO
 
     public function __construct(
         private string $name,
+        private float $hardIntervalFactor,
+        private float $normalIntervalFactor,
+        private float $easyIntervalFactor,
         private ?int $id = null,
         ?Collection $cards = null
     ) {
@@ -23,7 +26,10 @@ final class DeckDTO
         return new DeckDTO(
             id: array_key_exists('id', $data) ? (int) $data['id'] : null,
             name: $data['name'],
-            cards: $data['cards'] ?? null
+            hardIntervalFactor: (float) ($data['hard_interval_factor'] ?? 1.5),
+            normalIntervalFactor: (float) ($data['normal_interval_factor'] ?? 2),
+            easyIntervalFactor: (float) ($data['easy_interval_factor'] ?? 2.5),
+            cards: $data['cards'] ?? null,
         );
     }
 
@@ -32,6 +38,9 @@ final class DeckDTO
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'hardIntervalFactor' => $this->hardIntervalFactor,
+            'normalIntervalFactor' => $this->normalIntervalFactor,
+            'easyIntervalFactor' => $this->easyIntervalFactor,
         ];
     }
 
@@ -53,5 +62,20 @@ final class DeckDTO
     public function cards(): ?Collection
     {
         return $this->cards;
+    }
+
+    public function hardIntervalFactor(): float
+    {
+        return $this->hardIntervalFactor;
+    }
+
+    public function normalIntervalFactor(): float
+    {
+        return $this->normalIntervalFactor;
+    }
+
+    public function easyIntervalFactor(): float
+    {
+        return $this->easyIntervalFactor;
     }
 }

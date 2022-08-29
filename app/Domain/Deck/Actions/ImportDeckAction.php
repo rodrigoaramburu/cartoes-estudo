@@ -10,7 +10,7 @@ use Domain\Deck\Exceptions\DeckInvalidFormatException;
 use Domain\Deck\Repositories\CardRepositoryInterface;
 use Domain\Deck\Repositories\DeckRepositoryInterface;
 
-final class ImportarBaralhoAction
+final class ImportDeckAction
 {
     public function __construct(
         private DeckRepositoryInterface $deckRepository,
@@ -29,7 +29,10 @@ final class ImportarBaralhoAction
         }
 
         $deck = new DeckDTO(
-            name: $deckJson['deck']
+            name: $deckJson['deck'],
+            hardIntervalFactor: $deckJson['hardIntervalFactor'],
+            normalIntervalFactor: $deckJson['normalIntervalFactor'],
+            easyIntervalFactor: $deckJson['easyIntervalFactor'],
         );
         $this->deckRepository->save($deck);
 
@@ -37,7 +40,8 @@ final class ImportarBaralhoAction
             $this->cardRepository->save(new CardDTO(
                 front: $card['front'],
                 back: $card['back'],
-                deck: $deck
+                deck: $deck,
+                lastInterval: 1
             ));
         }
     }

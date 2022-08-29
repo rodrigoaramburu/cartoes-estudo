@@ -65,9 +65,9 @@ test('não deve salvar card se não tiver frente, verso e deck', function () {
         'deck_id' => '',
     ])
     ->assertStatus(302)
-    ->assertSessionHasErrors(['front'=>'A frente do cartão deve ser preenchida'])
-    ->assertSessionHasErrors(['back'=>'O verso do cartão deve ser preenchido'])
-    ->assertSessionHasErrors(['deck_id'=>'O Baralho do cartão deve ser selecionado']);
+    ->assertSessionHasErrors(['front' => 'A frente do cartão deve ser preenchida'])
+    ->assertSessionHasErrors(['back' => 'O verso do cartão deve ser preenchido'])
+    ->assertSessionHasErrors(['deck_id' => 'O Baralho do cartão deve ser selecionado']);
 
     $this->assertDatabaseMissing('decks', [
         'front' => '',
@@ -146,9 +146,9 @@ test('não deve alterar cartão de estudo se não tiver frente, verso e deck', f
         'deck_id' => '',
     ])
     ->assertStatus(302)
-    ->assertSessionHasErrors(['front'=>'A frente do cartão deve ser preenchida'])
-    ->assertSessionHasErrors(['back'=>'O verso do cartão deve ser preenchido'])
-    ->assertSessionHasErrors(['deck_id'=>'O Baralho do cartão deve ser selecionado']);
+    ->assertSessionHasErrors(['front' => 'A frente do cartão deve ser preenchida'])
+    ->assertSessionHasErrors(['back' => 'O verso do cartão deve ser preenchido'])
+    ->assertSessionHasErrors(['deck_id' => 'O Baralho do cartão deve ser selecionado']);
 
     $this->assertDatabaseMissing('decks', [
         'id' => $card->id,

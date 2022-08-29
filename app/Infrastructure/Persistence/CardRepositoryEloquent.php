@@ -30,6 +30,7 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
             'front' => $card->front(),
             'back' => $card->back(),
             'deck_id' => $card->deck()->id(),
+            'last_interval' => $card->lastInterval(),
         ]);
     }
 
@@ -62,7 +63,8 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
             'front' => $card->front(),
             'back' => $card->back(),
             'deck_id' => $card->deck()->id(),
-            'next_revision'=> $card->nextRevision(),
+            'next_revision' => $card->nextRevision(),
+            'last_interval' => $card->lastInterval(),
         ]);
     }
 }

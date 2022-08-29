@@ -28,8 +28,8 @@ final class CardController extends Controller
     public function index(
         string $deckId,
         RetrieveDeckAction $retrieveDeckAction,
-        ListCardsAction $listCardsAction): View
-    {
+        ListCardsAction $listCardsAction
+    ): View {
         $deck = $retrieveDeckAction(id: (int) $deckId);
         $cards = $listCardsAction(deck: $deck);
 
@@ -51,7 +51,7 @@ final class CardController extends Controller
             CardDTO::fromArray(
                 array_merge(
                     $request->only(['front', 'back']),
-                    ['deck'=>$deck->toArray()]
+                    ['deck' => $deck->toArray()]
                 )
             )
         );
@@ -91,7 +91,7 @@ final class CardController extends Controller
             CardDTO::fromArray(
                 array_merge(
                     $request->only(['id', 'front', 'back']),
-                    ['deck'=>$deck->toArray()]
+                    ['deck' => $deck->toArray()]
                 )
             )
         );
@@ -104,7 +104,7 @@ final class CardController extends Controller
         string $idDeck,
         NextCardRevisionAction $nextCardRevision,
         TotalCardsToRevise $totalCardsToRevise
-        ): View {
+    ): View {
         $card = $nextCardRevision((int) $idDeck);
         $totalCards = $totalCardsToRevise((int) $idDeck);
 

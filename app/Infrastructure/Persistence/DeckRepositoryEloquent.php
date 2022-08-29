@@ -26,6 +26,9 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
     {
         $deckModel = Deck::create([
             'name' => $deck->name(),
+            'hard_interval_factor' => $deck->hardIntervalFactor(),
+            'normal_interval_factor' => $deck->normalIntervalFactor(),
+            'easy_interval_factor' => $deck->easyIntervalFactor(),
         ]);
         $deck->changeId($deckModel->id);
     }
@@ -56,6 +59,9 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
 
         $deckModel->update([
             'name' => $deck->name(),
+            'hard_interval_factor' => $deck->hardIntervalFactor(),
+            'normal_interval_factor' => $deck->normalIntervalFactor(),
+            'easy_interval_factor' => $deck->easyIntervalFactor(),
         ]);
     }
 }

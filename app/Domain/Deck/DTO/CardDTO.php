@@ -13,6 +13,7 @@ final class CardDTO implements JsonSerializable
         private string $front,
         private string $back,
         private DeckDTO $deck,
+        private float $lastInterval,
         private ?int $id = null,
         private ?DateTime $nextRevision = null,
     ) {
@@ -27,6 +28,7 @@ final class CardDTO implements JsonSerializable
             nextRevision: array_key_exists('next_revision', $data) && $data['next_revision'] !== null
                             ? (new DateTime($data['next_revision']))->setTimezone(new \DateTimeZone(env('APP_TIMEZONE')))
                             : null,
+            lastInterval: (float) ($data['last_interval'] ?? 1),
             deck: DeckDTO::fromArray($data['deck'])
         );
     }
@@ -64,8 +66,18 @@ final class CardDTO implements JsonSerializable
         $this->nextRevision = $nextRevision;
     }
 
+    public function changeLastInterval(float $lastInterval): void
+    {
+        $this->lastInterval = $lastInterval;
+    }
+
     public function deck(): DeckDTO
     {
         return $this->deck;
+    }
+
+    public function lastInterval(): float
+    {
+        return $this->lastInterval;
     }
 }
