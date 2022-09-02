@@ -4,14 +4,14 @@
 
         <x-flash message="Verifique os erros abaixo." />
 
-        <form action="{{route('decks.update', $deck->name())}}" method="POST">
+        <form action="{{route('decks.update', $deck->name)}}" method="POST">
             @method('PUT')
             @csrf
 
-            <input type="hidden" name="id" value="{{$deck->id()}}">
+            <input type="hidden" name="id" value="{{$deck->id}}">
             <div class="mb-2">
                 <label for="name" class="block mb-1">Nome do Baralho:</label>
-                <input type="text" name="name" id="name" value="{{$deck->name()}}"  placeholder="Informe o nome do Baralho" class="w-full">
+                <input type="text" name="name" id="name" value="{{$deck->name}}"  placeholder="Informe o nome do Baralho" class="w-full">
                 @error('name')
                 <div class="text-red-600">{{$message}}</div>
                 @enderror
@@ -20,15 +20,15 @@
             <div class="flex gap-3 mb-2">
                 <div class="w-full">
                     <label for="hard_interval_factor" class="block mb-1">Fator de Incremento Difícil:</label>
-                    <input type="text" name="hard_interval_factor" id="hard_interval_factor" value="{{$deck->hardIntervalFactor()}}"  placeholder="Informe fator de incremento do status difícil" class="w-full">
+                    <input type="text" name="hard_interval_factor" id="hard_interval_factor" value="{{$deck->hardIntervalFactor}}"  placeholder="Informe fator de incremento do status difícil" class="w-full">
                 </div>
                 <div  class="w-full">
                     <label for="normal_interval_factor" class="block mb-1">Fator de Incremento Difícil:</label>
-                    <input type="text" name="normal_interval_factor" id="normal_interval_factor" value="{{$deck->normalIntervalFactor()}}"  placeholder="Informe fator de incremento do status normal" class="w-full">
+                    <input type="text" name="normal_interval_factor" id="normal_interval_factor" value="{{$deck->normalIntervalFactor}}"  placeholder="Informe fator de incremento do status normal" class="w-full">
                 </div>
                 <div class="w-full">
                     <label for="easy_interval_factor" class="block mb-1">Fator de Incremento Difícil:</label>
-                    <input type="text" name="easy_interval_factor" id="easy_interval_factor" value="{{$deck->easyIntervalFactor()}}"  placeholder="Informe fator de incremento do status fácil" class="w-full">
+                    <input type="text" name="easy_interval_factor" id="easy_interval_factor" value="{{$deck->easyIntervalFactor}}"  placeholder="Informe fator de incremento do status fácil" class="w-full">
                 </div>
             </div>
 

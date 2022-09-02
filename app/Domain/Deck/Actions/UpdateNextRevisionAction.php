@@ -17,28 +17,31 @@ final class UpdateNextRevisionAction
 
     public function __invoke(CardDTO $card, RevisionStatus $revisionStatus): void
     {
-        switch ($revisionStatus) {
-            case RevisionStatus::ERROR:
-                $interval = 1;
-                $nextRevision = (new \DateTime('now'))->modify('+1 min');
-                break;
-            case RevisionStatus::HARD:
-                $interval = ceil($card->deck()->hardIntervalFactor() * $card->lastInterval());
-                $nextRevision = (new \DateTime('now'))->modify("+$interval days");
-                break;
-            case RevisionStatus::NORMAL:
-                $interval = ceil($card->deck()->normalIntervalFactor() * $card->lastInterval());
-                $nextRevision = (new \DateTime('now'))->modify("+$interval days");
-                break;
-            case RevisionStatus::EASY:
-                $interval = ceil($card->deck()->easyIntervalFactor() * $card->lastInterval());
-                $nextRevision = (new \DateTime('now'))->modify("+$interval days");
-                break;
+        if ($revisionStatus == RevisionStatus::ERROR) {
+            $nextRevision = (new \DateTime('now'))->modify('+1 min');
+            $nextInterval = ceil( $card->lastInterval / 2);
+        }else{
+            $factor = match($revisionStatus){
+                RevisionStatus::HARD => $card->deck->hardIntervalFactor,
+                RevisionStatus::NORMAL => $card->deck->normalIntervalFactor,
+                RevisionStatus::EASY => $card->deck->easyIntervalFactor
+            };
+            $nextInterval = $card->lastInterval != 0 
+                ? ceil( $factor * $card->lastInterval)
+                : 1;
+
+            $nextRevision = (new \DateTime('now'))->modify("+$nextInterval days");
         }
 
-        $card->changeLastInterval($interval);
-        $card->changeNextRevision($nextRevision);
-
-        $this->cardRepository->update($card);
+        $this->cardRepository->update(new CardDTO(
+            id: $card->id,
+            front: $card->front,
+            back: $card->back,
+            frontHtml: $card->frontHtml,
+            backHtml: $card->backHtml,
+            nextRevision: $nextRevision,
+            lastInterval: $nextInterval,
+            deck: $card->deck
+        ));
     }
 }

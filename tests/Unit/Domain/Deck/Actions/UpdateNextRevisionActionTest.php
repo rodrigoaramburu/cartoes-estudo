@@ -29,13 +29,13 @@ beforeEach(function () {
 });
 
 test('deve atualizar o next_revision de um card para +1 minuto se RevisionStatus for ERROR', function () {
-    $card = new CardDTO(id: 1, front: 'front1', back: 'brack1', nextRevision: null, deck: $this->deck, lastInterval: 1);
+    $card = new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml', back: 'brack1', backHtml: 'backhtml', nextRevision: null, deck: $this->deck, lastInterval: 1);
 
     $this->cardRepository->shouldReceive('update')->with(Mockery::on(function ($card) {
         $date = (new \DateTime('now'))->modify('+1 min');
 
-        return $card->nextRevision()->format('Y-m-d H:i') == $date->format('Y-m-d H:i') &&
-                $card->lastInterval() == 1;
+        return $card->nextRevision->format('Y-m-d H:i') == $date->format('Y-m-d H:i') &&
+                $card->lastInterval == 1;
     }));
 
     $updateNextRevisionAction = new UpdateNextRevisionAction(
@@ -49,13 +49,13 @@ test('deve atualizar o next_revision de um card para +1 minuto se RevisionStatus
 });
 
 test('deve atualizar o next_revision de um card com RevisionStatus HARD se (lastInterval, nextDay)', function ($lastInterval, $nextInterval) {
-    $card = new CardDTO(id: 1, front: 'front1', back: 'brack1', nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
+    $card = new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml', back: 'brack1', backHtml: 'backhtml',  nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
 
     $this->cardRepository->shouldReceive('update')->with(Mockery::on(function ($card) use ($nextInterval) {
         $date = (new \DateTime('now'))->modify("+$nextInterval day");
 
-        return $card->nextRevision()->format('Y-m-d H:i') == $date->format('Y-m-d H:i') &&
-            $card->lastInterval() == $nextInterval;
+        return $card->nextRevision->format('Y-m-d H:i') == $date->format('Y-m-d H:i') &&
+            $card->lastInterval == $nextInterval;
     }));
 
     $updateNextRevisionAction = new UpdateNextRevisionAction(
@@ -73,13 +73,13 @@ test('deve atualizar o next_revision de um card com RevisionStatus HARD se (last
 ]);
 
 test('deve atualizar o next_revision de um card para com RevisionStatus for NORMAL', function ($lastInterval, $nextInterval) {
-    $card = new CardDTO(id: 1, front: 'front1', back: 'brack1', nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
+    $card = new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml', back: 'brack1', backHtml: 'backhtml',  nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
 
     $this->cardRepository->shouldReceive('update')->with(Mockery::on(function ($card) use ($nextInterval) {
         $date = (new \DateTime('now'))->modify("+$nextInterval days");
 
-        return $card->nextRevision()->format('Y-m-d H:i') == $date->format('Y-m-d H:i') &&
-        $card->lastInterval() == $nextInterval;
+        return $card->nextRevision->format('Y-m-d H:i') == $date->format('Y-m-d H:i') &&
+        $card->lastInterval == $nextInterval;
     }));
 
     $updateNextRevisionAction = new UpdateNextRevisionAction(
@@ -97,13 +97,13 @@ test('deve atualizar o next_revision de um card para com RevisionStatus for NORM
 ]);
 
 test('deve atualizar o next_revision de um card para com RevisionStatus for EASY', function ($lastInterval, $nextInterval) {
-    $card = new CardDTO(id: 1, front: 'front1', back: 'brack1', nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
+    $card = new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml', back: 'brack1', backHtml: 'backhtml', nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
 
     $this->cardRepository->shouldReceive('update')->with(Mockery::on(function ($card) use ($nextInterval) {
         $date = (new \DateTime('now'))->modify("+$nextInterval days");
 
-        return $card->nextRevision()->format('Y-m-d H:i') == $date->format('Y-m-d H:i') &&
-        $card->lastInterval() == $nextInterval;
+        return $card->nextRevision->format('Y-m-d H:i') == $date->format('Y-m-d H:i') &&
+        $card->lastInterval == $nextInterval;
     }));
 
     $updateNextRevisionAction = new UpdateNextRevisionAction(

@@ -22,10 +22,10 @@ test('deve listar os cards de um deck', function () {
 
     $this->get(route('cards.index', $deck1->id))
         ->assertStatus(200)
-        ->assertSee($cards1[0]->front)
-        ->assertSee($cards1[1]->back)
-        ->assertDontSee($cards2[0]->back)
-        ->assertDontSee($cards2[1]->back);
+        ->assertSee(strip_tags($cards1[0]->frontHtml))
+        ->assertSee(strip_tags($cards1[1]->frontHtml))
+        ->assertDontSee(strip_tags($cards2[0]->frontHtml))
+        ->assertDontSee(strip_tags($cards2[1]->frontHtml));
 });
 
 test('deve exibir tela de adicionar cartão', function () {

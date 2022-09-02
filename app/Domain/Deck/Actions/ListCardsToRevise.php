@@ -25,10 +25,10 @@ class ListCardsToRevise
 
         return $cards
             ->filter(function ($item) {
-                return $item->nextRevision() < new DateTime('now') || $item->nextRevision() === null;
+                return $item->nextRevision < new DateTime('now') || $item->nextRevision === null;
             })
             ->sortBy(function ($a) {
-                return $a->nextRevision() ?? new DateTime('now');
+                return $a->nextRevision ?? new DateTime('now');
             });
     }
 }

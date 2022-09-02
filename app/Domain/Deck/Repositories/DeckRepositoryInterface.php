@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Domain\Deck\Repositories;
 
 use Domain\Deck\DTO\DeckDTO;
+use Domain\Deck\Models\Deck;
 use Illuminate\Support\Collection;
 
 interface DeckRepositoryInterface
 {
     public function all(): Collection;
 
-    public function save(DeckDTO $deck): void;
+    public function save(DeckDTO $deck): DeckDTO;
 
     public function delete(int $id): void;
 

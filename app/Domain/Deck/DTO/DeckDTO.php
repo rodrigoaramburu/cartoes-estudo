@@ -8,14 +8,14 @@ use Illuminate\Support\Collection;
 
 final class DeckDTO
 {
-    private Collection $cards;
+    public readonly Collection $cards;
 
     public function __construct(
-        private string $name,
-        private float $hardIntervalFactor,
-        private float $normalIntervalFactor,
-        private float $easyIntervalFactor,
-        private ?int $id = null,
+        public readonly string $name,
+        public readonly float $hardIntervalFactor,
+        public readonly float $normalIntervalFactor,
+        public readonly float $easyIntervalFactor,
+        public readonly ?int $id = null,
         ?Collection $cards = null
     ) {
         $this->cards = $cards ?? collect();
@@ -44,38 +44,5 @@ final class DeckDTO
         ];
     }
 
-    public function id(): ?int
-    {
-        return $this->id;
-    }
-
-    public function changeId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    public function name(): string
-    {
-        return $this->name;
-    }
-
-    public function cards(): ?Collection
-    {
-        return $this->cards;
-    }
-
-    public function hardIntervalFactor(): float
-    {
-        return $this->hardIntervalFactor;
-    }
-
-    public function normalIntervalFactor(): float
-    {
-        return $this->normalIntervalFactor;
-    }
-
-    public function easyIntervalFactor(): float
-    {
-        return $this->easyIntervalFactor;
-    }
+   
 }

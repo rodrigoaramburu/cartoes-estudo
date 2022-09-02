@@ -58,18 +58,18 @@ final class CardController extends Controller
 
         Session::flash('message-success', 'O cartão foi adicionado');
 
-        return redirect()->route('cards.index', $deck->id());
+        return redirect()->route('cards.index', $deck->id);
     }
 
     public function delete(string $id, RetrieveCardAction $retrieveCardAction, DeleteCardAction $deleteCardAction): RedirectResponse
     {
         $card = $retrieveCardAction((int) $id);
 
-        $deleteCardAction($card->id());
+        $deleteCardAction($card->id);
 
         Session::flash('message-success', 'O Cartão de Estudo foi deletado.');
 
-        return redirect()->route('cards.index', $card->deck()->id());
+        return redirect()->route('cards.index', $card->deck->id);
     }
 
     public function edit(string $id, RetrieveCardAction $retrieveCardAction, ListDeckAction $listDecksAction): View
@@ -97,7 +97,7 @@ final class CardController extends Controller
         );
         Session::flash('message-success', 'O Cartão de Estudos foi alterado');
 
-        return redirect()->route('cards.index', $deck->id());
+        return redirect()->route('cards.index', $deck->id);
     }
 
     public function nextRevision(
@@ -124,6 +124,6 @@ final class CardController extends Controller
             revisionStatus: RevisionStatus::from($request->input('revision-status'))
         );
 
-        return redirect()->route('cards.next-revision', $card->deck()->id());
+        return redirect()->route('cards.next-revision', $card->deck->id);
     }
 }

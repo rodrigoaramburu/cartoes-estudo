@@ -18,10 +18,32 @@ class CardFactory extends Factory
      */
     public function definition()
     {
+        $frontSentence = fake()->sentence();
+        $backSentence = fake()->sentence();
+
+        $front = <<<"JSON"
+            {
+                "time":1662059960377,
+                "blocks":[
+                    {"id":"vBjYjm-fvP","type":"paragraph","data":{"text":"$frontSentence"},"tunes":{"alignTune":{"alignment":"left"}}}
+                    ],
+                "version":"2.25.0"
+                }
+        JSON;
+        $back = <<<"JSON"
+            {
+                "time":1662059960377,
+                "blocks":[
+                    {"id":"vBjYjm-fvP","type":"paragraph","data":{"text":"$backSentence"},"tunes":{"alignTune":{"alignment":"left"}}}
+                    ],
+                "version":"2.25.0"
+                }
+        JSON;
         return [
             'deck_id' => 1,
-            'front' => fake()->sentence(),
-            'back' => fake()->sentence(),
+            'front' => $front,
+            'back' => $back,
         ];
     }
 }
+

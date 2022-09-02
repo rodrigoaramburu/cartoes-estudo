@@ -102,7 +102,7 @@ final class DeckController extends Controller
             status: 200,
             headers: [
                 'Content-type' => 'application/zip',
-                'Content-disposition' => 'attachment; filename="'.Str::slug($deck->name()).'.zdeck"',
+                'Content-disposition' => 'attachment; filename="'.Str::slug($deck->name).'.zdeck"',
             ]
         );
     }

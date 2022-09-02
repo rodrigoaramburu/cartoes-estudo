@@ -29,9 +29,9 @@ beforeEach(function () {
 
 test('deve retornar 1 se nenhum card já foi revisado', function () {
     $this->cardRepository->shouldReceive('getByDeck')->with($this->deck)->andReturn(collect([
-        new CardDTO(id: 1, front: 'front1', back: 'brack1', nextRevision: null, deck: $this->deck, lastInterval: 1),
-        new CardDTO(id: 2, front: 'front2', back: 'brack2', nextRevision: null, deck: $this->deck, lastInterval: 1),
-        new CardDTO(id: 3, front: 'front3', back: 'brack3', nextRevision: null, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml1', back: 'brack1', backHtml: 'backhtml1', nextRevision: null, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 2, front: 'front2', frontHtml: 'fronthtml2', back: 'brack2', backHtml: 'backhtml2', nextRevision: null, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 3, front: 'front3', frontHtml: 'fronthtml3', back: 'brack3', backHtml: 'backhtml3', nextRevision: null, deck: $this->deck, lastInterval: 1),
     ]));
 
     $nextCardRevisionAction = new NextCardRevisionAction(
@@ -41,7 +41,7 @@ test('deve retornar 1 se nenhum card já foi revisado', function () {
 
     $card = $nextCardRevisionAction(1);
 
-    expect($card->id())->toBe(1);
+    expect($card->id)->toBe(1);
 });
 
 test('deve retornar revisão mais atrasada', function () {
@@ -50,9 +50,9 @@ test('deve retornar revisão mais atrasada', function () {
     $nr3 = (new DateTime('now'))->modify('-5 hours');
 
     $this->cardRepository->shouldReceive('getByDeck')->with($this->deck)->andReturn(collect([
-        new CardDTO(id: 1, front: 'front1', back: 'brack1', nextRevision: $nr1, deck: $this->deck, lastInterval: 1),
-        new CardDTO(id: 2, front: 'front2', back: 'brack2', nextRevision: $nr2, deck: $this->deck, lastInterval: 1),
-        new CardDTO(id: 3, front: 'front3', back: 'brack3', nextRevision: $nr3, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml1', back: 'brack1', backHtml: 'backhtml1', nextRevision: $nr1, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 2, front: 'front2', frontHtml: 'fronthtml2', back: 'brack2', backHtml: 'backhtml2', nextRevision: $nr2, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 3, front: 'front3', frontHtml: 'fronthtml3', back: 'brack3', backHtml: 'backhtml3', nextRevision: $nr3, deck: $this->deck, lastInterval: 1),
     ]));
 
     $nextCardRevisionAction = new NextCardRevisionAction(
@@ -62,16 +62,16 @@ test('deve retornar revisão mais atrasada', function () {
 
     $card = $nextCardRevisionAction(1);
 
-    expect($card->id())->toBe(2);
+    expect($card->id)->toBe(2);
 });
 
 test('deve retornar revisão mais atrasada antes de card não revisado', function () {
     $nr1 = (new DateTime('now'))->modify('-4 hours');
 
     $this->cardRepository->shouldReceive('getByDeck')->with($this->deck)->andReturn(collect([
-        new CardDTO(id: 1, front: 'front1', back: 'brack1', nextRevision: null, deck: $this->deck, lastInterval: 1),
-        new CardDTO(id: 2, front: 'front2', back: 'brack2', nextRevision: $nr1, deck: $this->deck, lastInterval: 1),
-        new CardDTO(id: 3, front: 'front3', back: 'brack3', nextRevision: null, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml1', back: 'brack1', backHtml: 'backhtml1', nextRevision: null, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 2, front: 'front2', frontHtml: 'fronthtml2', back: 'brack2', backHtml: 'backhtml2', nextRevision: $nr1, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 3, front: 'front3', frontHtml: 'fronthtml3', back: 'brack3', backHtml: 'backhtml3', nextRevision: null, deck: $this->deck, lastInterval: 1),
     ]));
 
     $nextCardRevisionAction = new NextCardRevisionAction(
@@ -81,7 +81,7 @@ test('deve retornar revisão mais atrasada antes de card não revisado', functio
 
     $card = $nextCardRevisionAction(1);
 
-    expect($card->id())->toBe(2);
+    expect($card->id)->toBe(2);
 });
 
 test('deve retornar null se next revision for maior que data atual', function () {
@@ -90,9 +90,9 @@ test('deve retornar null se next revision for maior que data atual', function ()
     $nr3 = (new DateTime('now'))->modify('+3 hours');
 
     $this->cardRepository->shouldReceive('getByDeck')->with($this->deck)->andReturn(collect([
-        new CardDTO(id: 1, front: 'front1', back: 'brack1', nextRevision: $nr1, deck: $this->deck, lastInterval: 1),
-        new CardDTO(id: 2, front: 'front2', back: 'brack2', nextRevision: $nr2, deck: $this->deck, lastInterval: 1),
-        new CardDTO(id: 3, front: 'front3', back: 'brack3', nextRevision: $nr3, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml1', back: 'brack1', backHtml: 'backhtml1', nextRevision: $nr1, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 2, front: 'front2', frontHtml: 'fronthtml2', back: 'brack2', backHtml: 'backhtml2', nextRevision: $nr2, deck: $this->deck, lastInterval: 1),
+        new CardDTO(id: 3, front: 'front3', frontHtml: 'fronthtml3', back: 'brack3', backHtml: 'backhtml3', nextRevision: $nr3, deck: $this->deck, lastInterval: 1),
     ]));
 
     $nextCardRevisionAction = new NextCardRevisionAction(

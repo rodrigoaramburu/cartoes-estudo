@@ -34,12 +34,14 @@ final class ImportDeckAction
             normalIntervalFactor: $deckJson['normalIntervalFactor'],
             easyIntervalFactor: $deckJson['easyIntervalFactor'],
         );
-        $this->deckRepository->save($deck);
+        $deck = $this->deckRepository->save($deck);
 
         foreach ($deckJson['cards'] as $card) {
             $this->cardRepository->save(new CardDTO(
                 front: $card['front'],
                 back: $card['back'],
+                frontHtml: $card['front_html'],
+                backHtml: $card['back_html'],
                 deck: $deck,
                 lastInterval: 1
             ));
