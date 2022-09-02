@@ -30,9 +30,8 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
             'normal_interval_factor' => $deck->normalIntervalFactor,
             'easy_interval_factor' => $deck->easyIntervalFactor,
         ]);
-        
-        return DeckDTO::fromArray($deckModel->toArray());
 
+        return DeckDTO::fromArray($deckModel->toArray());
     }
 
     public function delete(int $id): void

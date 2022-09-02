@@ -21,7 +21,9 @@
                     },
                     embedImage: {
                         class: EmbedImage,
-                        
+                    },
+                    embedAudio: {
+                        class: EmbedAudio,
                     },
                     alignTune: {
                         class: AlignmentTuneTool,

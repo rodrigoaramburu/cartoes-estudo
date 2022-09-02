@@ -39,6 +39,7 @@ class CardFactory extends Factory
                 "version":"2.25.0"
                 }
         JSON;
+
         return [
             'deck_id' => 1,
             'front' => $front,
@@ -46,4 +47,3 @@ class CardFactory extends Factory
         ];
     }
 }
-

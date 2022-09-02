@@ -175,8 +175,8 @@ test('deve importar um baralho', function () {
         'normalIntervalFactor' => 2,
         'easyIntervalFactor' => 2.5,
         'cards' => [
-            ['front' => 'front1', 'front_html'=> 'front_html1', 'back' => 'back1' , 'back_html' => 'backhtml1'],
-            ['front' => 'front2', 'front_html'=> 'front_html2', 'back' => 'back2' , 'back_html' => 'backhtml2'],
+            ['front' => 'front1', 'front_html' => 'front_html1', 'back' => 'back1', 'back_html' => 'backhtml1'],
+            ['front' => 'front2', 'front_html' => 'front_html2', 'back' => 'back2', 'back_html' => 'backhtml2'],
         ],
     ]);
 

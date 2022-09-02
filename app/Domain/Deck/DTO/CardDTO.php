@@ -46,6 +46,4 @@ final class CardDTO implements JsonSerializable
             'back' => $this->back,
         ];
     }
-
-   
 }

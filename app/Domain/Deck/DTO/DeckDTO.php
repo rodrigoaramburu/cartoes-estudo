@@ -43,6 +43,4 @@ final class DeckDTO
             'easyIntervalFactor' => $this->easyIntervalFactor,
         ];
     }
-
-   
 }

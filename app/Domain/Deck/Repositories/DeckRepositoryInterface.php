@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Domain\Deck\Repositories;
 
 use Domain\Deck\DTO\DeckDTO;
-use Domain\Deck\Models\Deck;
 use Illuminate\Support\Collection;
 
 interface DeckRepositoryInterface

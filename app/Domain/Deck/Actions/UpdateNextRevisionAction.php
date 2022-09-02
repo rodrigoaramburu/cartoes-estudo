@@ -19,15 +19,15 @@ final class UpdateNextRevisionAction
     {
         if ($revisionStatus == RevisionStatus::ERROR) {
             $nextRevision = (new \DateTime('now'))->modify('+1 min');
-            $nextInterval = ceil( $card->lastInterval / 2);
-        }else{
-            $factor = match($revisionStatus){
+            $nextInterval = ceil($card->lastInterval / 2);
+        } else {
+            $factor = match ($revisionStatus) {
                 RevisionStatus::HARD => $card->deck->hardIntervalFactor,
                 RevisionStatus::NORMAL => $card->deck->normalIntervalFactor,
                 RevisionStatus::EASY => $card->deck->easyIntervalFactor
             };
-            $nextInterval = $card->lastInterval != 0 
-                ? ceil( $factor * $card->lastInterval)
+            $nextInterval = $card->lastInterval != 0
+                ? ceil($factor * $card->lastInterval)
                 : 1;
 
             $nextRevision = (new \DateTime('now'))->modify("+$nextInterval days");

@@ -49,7 +49,7 @@ test('deve atualizar o next_revision de um card para +1 minuto se RevisionStatus
 });
 
 test('deve atualizar o next_revision de um card com RevisionStatus HARD se (lastInterval, nextDay)', function ($lastInterval, $nextInterval) {
-    $card = new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml', back: 'brack1', backHtml: 'backhtml',  nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
+    $card = new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml', back: 'brack1', backHtml: 'backhtml', nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
 
     $this->cardRepository->shouldReceive('update')->with(Mockery::on(function ($card) use ($nextInterval) {
         $date = (new \DateTime('now'))->modify("+$nextInterval day");
@@ -73,7 +73,7 @@ test('deve atualizar o next_revision de um card com RevisionStatus HARD se (last
 ]);
 
 test('deve atualizar o next_revision de um card para com RevisionStatus for NORMAL', function ($lastInterval, $nextInterval) {
-    $card = new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml', back: 'brack1', backHtml: 'backhtml',  nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
+    $card = new CardDTO(id: 1, front: 'front1', frontHtml: 'fronthtml', back: 'brack1', backHtml: 'backhtml', nextRevision: null, deck: $this->deck, lastInterval: $lastInterval);
 
     $this->cardRepository->shouldReceive('update')->with(Mockery::on(function ($card) use ($nextInterval) {
         $date = (new \DateTime('now'))->modify("+$nextInterval days");
@@ -91,9 +91,9 @@ test('deve atualizar o next_revision de um card para com RevisionStatus for NORM
         revisionStatus: RevisionStatus::NORMAL
     );
 })->with([
-    [1,2],
-    [2,4],
-    [4,8]
+    [1, 2],
+    [2, 4],
+    [4, 8],
 ]);
 
 test('deve atualizar o next_revision de um card para com RevisionStatus for EASY', function ($lastInterval, $nextInterval) {

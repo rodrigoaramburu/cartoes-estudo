@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Domain\Util\EditorParser;
 
@@ -8,6 +10,7 @@ class EditorParser
     {
         $this->blockProcessors['paragraph'] = new ParagraphBlock();
         $this->blockProcessors['embedImage'] = new EmbedImageBlock();
+        $this->blockProcessors['embedAudio'] = new EmbedAudioBlock();
     }
 
     public function parse(string $json): string
@@ -15,9 +18,8 @@ class EditorParser
         $data = json_decode($json, true);
 
         $html = '';
-        foreach($data['blocks'] ?? [] as $block){
-
-            $html .= $this->blockProcessors[ $block['type'] ]->parse($block);
+        foreach ($data['blocks'] ?? [] as $block) {
+            $html .= $this->blockProcessors[$block['type']]->parse($block);
         }
 
         return $html;
