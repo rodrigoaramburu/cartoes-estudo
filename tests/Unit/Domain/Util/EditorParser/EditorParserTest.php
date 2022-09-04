@@ -61,3 +61,20 @@ test('deve parsear block de EmbedAudio', function () {
 
     expect($html)->toBe('<div style="display: flex; justify-content: center"><audio controls src="data:audio/mp3;base64,/9j/2w"></div>');
 });
+
+
+test('deve parsear block de Header', function () {
+    $parser = new EditorParser();
+
+    $json = <<<'JSON'
+        {
+            "time":1662057754901,
+            "blocks":[
+                {"id":"IUe3j2PbZB","type":"header","data":{"text":"teste", "level":"3"}, "tunes":{"alignTune":{"alignment":"center"}}}
+            ],
+            "version":"2.25.0"}
+        JSON;
+    $html = $parser->parse($json);
+
+    expect($html)->toBe('<h3 style="text-align: center">teste</h3>');
+});
