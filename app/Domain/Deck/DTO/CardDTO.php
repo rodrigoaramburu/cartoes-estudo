@@ -10,11 +10,14 @@ use JsonSerializable;
 final class CardDTO implements JsonSerializable
 {
     public function __construct(
-        private string $front,
-        private string $back,
-        private DeckDTO $deck,
-        private ?int $id = null,
-        private ?DateTime $nextRevision = null,
+        public readonly string $front,
+        public readonly string $back,
+        public readonly string $frontHtml,
+        public readonly string $backHtml,
+        public readonly DeckDTO $deck,
+        public readonly float $lastInterval,
+        public readonly ?int $id = null,
+        public readonly ?DateTime $nextRevision = null,
     ) {
     }
 
@@ -24,9 +27,12 @@ final class CardDTO implements JsonSerializable
             id: array_key_exists('id', $data) ? (int) $data['id'] : null,
             front: $data['front'],
             back: $data['back'],
+            frontHtml: $data['front_html'] ?? '',
+            backHtml: $data['back_html'] ?? '',
             nextRevision: array_key_exists('next_revision', $data) && $data['next_revision'] !== null
                             ? (new DateTime($data['next_revision']))->setTimezone(new \DateTimeZone(env('APP_TIMEZONE')))
                             : null,
+            lastInterval: (float) ($data['last_interval'] ?? 0),
             deck: DeckDTO::fromArray($data['deck'])
         );
     }
@@ -34,38 +40,10 @@ final class CardDTO implements JsonSerializable
     public function jsonSerialize(): mixed
     {
         return [
-            'front' => $this->front(),
-            'back' => $this->back(),
+            'front_html' => $this->frontHtml,
+            'front' => $this->front,
+            'back_html' => $this->backHtml,
+            'back' => $this->back,
         ];
-    }
-
-    public function id(): ?int
-    {
-        return $this->id;
-    }
-
-    public function front(): string
-    {
-        return $this->front;
-    }
-
-    public function back(): string
-    {
-        return $this->back;
-    }
-
-    public function nextRevision(): ?DateTime
-    {
-        return $this->nextRevision;
-    }
-
-    public function changeNextRevision(DateTime $nextRevision): void
-    {
-        $this->nextRevision = $nextRevision;
-    }
-
-    public function deck(): DeckDTO
-    {
-        return $this->deck;
     }
 }

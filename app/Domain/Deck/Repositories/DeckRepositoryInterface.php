@@ -11,7 +11,7 @@ interface DeckRepositoryInterface
 {
     public function all(): Collection;
 
-    public function save(DeckDTO $deck): void;
+    public function save(DeckDTO $deck): DeckDTO;
 
     public function delete(int $id): void;
 

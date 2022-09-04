@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Deck\Models;
 
+use Domain\Util\EditorParser\EditorParser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,14 +18,31 @@ final class Card extends Model
         'front',
         'back',
         'next_revision',
+        'last_interval',
     ];
 
+    protected $appends = ['front_html', 'back_html'];
+
     protected $casts = [
-        'next_revision' =>  'datetime',
+        'next_revision' => 'datetime',
     ];
 
     public function deck(): BelongsTo
     {
         return $this->belongsTo(Deck::class);
+    }
+
+    public function getFrontHtmlAttribute(): string
+    {
+        $editorParser = new EditorParser();
+
+        return $editorParser->parse($this->front);
+    }
+
+    public function getBackHtmlAttribute(): string
+    {
+        $editorParser = new EditorParser();
+
+        return $editorParser->parse($this->back);
     }
 }

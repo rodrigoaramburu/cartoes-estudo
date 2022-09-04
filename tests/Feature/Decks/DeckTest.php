@@ -39,7 +39,7 @@ test('não deve salvar deck com nome vazio', function () {
         'name' => '',
     ])
         ->assertStatus(302)
-        ->assertSessionHasErrors(['name'=>'O nome deve ser preenchido']);
+        ->assertSessionHasErrors(['name' => 'O nome deve ser preenchido']);
 
     $this->assertDatabaseMissing('decks', [
         'name' => '',
@@ -55,7 +55,7 @@ test('não deve salvar deck se no existir', function () {
         'name' => 'Baralho Teste',
     ])
     ->assertStatus(302)
-    ->assertSessionHasErrors(['name'=>'O nome já existe']);
+    ->assertSessionHasErrors(['name' => 'O nome já existe']);
 
     $this->assertDatabaseMissing('decks', [
         'name' => '',
@@ -71,7 +71,7 @@ test('deve deletar um deck', function () {
 
     $this->assertDatabaseMissing('decks', [
         'id' => $deck->id,
-        'name' =>$deck->name,
+        'name' => $deck->name,
     ]);
 });
 
@@ -120,7 +120,7 @@ test('não deve alterar um deck com nome em branco', function () {
         'name' => '',
     ])
         ->assertStatus(302)
-        ->assertSessionHasErrors(['name'=>'O nome deve ser preenchido']);
+        ->assertSessionHasErrors(['name' => 'O nome deve ser preenchido']);
 
     $this->assertDatabaseHas('decks', [
         'id' => $deck->id,
@@ -171,9 +171,12 @@ test('deve exportar baralho', function () {
 test('deve importar um baralho', function () {
     $data = json_encode([
         'deck' => 'Deck Teste',
+        'hardIntervalFactor' => 1.5,
+        'normalIntervalFactor' => 2,
+        'easyIntervalFactor' => 2.5,
         'cards' => [
-            ['front'=> 'front1', 'back'=> 'back1'],
-            ['front'=> 'front2', 'back'=> 'back2'],
+            ['front' => 'front1', 'front_html' => 'front_html1', 'back' => 'back1', 'back_html' => 'backhtml1'],
+            ['front' => 'front2', 'front_html' => 'front_html2', 'back' => 'back2', 'back_html' => 'backhtml2'],
         ],
     ]);
 
@@ -184,7 +187,7 @@ test('deve importar um baralho', function () {
     $zip->close();
 
     $this->post(route('decks.import'), [
-        'deck-file' =>  new UploadedFile($tmpfname, 'deck-1.zdeck'),
+        'deck-file' => new UploadedFile($tmpfname, 'deck-1.zdeck'),
     ])
         ->assertRedirect(route('decks.index'))
         ->assertSessionHas('message-success', 'O Baralho foi importado com sucesso.');
@@ -205,7 +208,7 @@ test('deve exibir mensagem se formato de baralho inválido ao importa', function
     file_put_contents($tmpfname, 'um teste qualquer');
 
     $this->post(route('decks.import'), [
-        'deck-file' =>  new UploadedFile($tmpfname, 'deck-1.zdeck'),
+        'deck-file' => new UploadedFile($tmpfname, 'deck-1.zdeck'),
     ])
     ->assertRedirect(route('decks.index'))
     ->assertSessionHas('message-error', 'Error ao Importar Baralho: Formato de Arquivo Inválido');

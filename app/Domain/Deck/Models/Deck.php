@@ -13,5 +13,8 @@ class Deck extends Model
 
     protected $fillable = [
         'name',
+        'hard_interval_factor',
+        'normal_interval_factor',
+        'easy_interval_factor',
     ];
 }

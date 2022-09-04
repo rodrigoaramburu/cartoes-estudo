@@ -15,7 +15,7 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
 {
     public function getByDeck(DeckDTO $deck): Collection
     {
-        $cards = Card::where('deck_id', $deck->id())->with(['deck'])->orderBy('next_revision')->get();
+        $cards = Card::where('deck_id', $deck->id)->with(['deck'])->orderBy('next_revision')->get();
 
         $cards->transform(function ($item) {
             return CardDTO::fromArray($item->toArray());
@@ -27,9 +27,10 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
     public function save(CardDTO $card): void
     {
         Card::create([
-            'front' => $card->front(),
-            'back' => $card->back(),
-            'deck_id' => $card->deck()->id(),
+            'front' => $card->front,
+            'back' => $card->back,
+            'deck_id' => $card->deck->id,
+            'last_interval' => $card->lastInterval,
         ]);
     }
 
@@ -53,16 +54,17 @@ final class CardRepositoryEloquent implements CardRepositoryInterface
 
     public function update(CardDTO $card): void
     {
-        $cardModel = Card::find($card->id());
+        $cardModel = Card::find($card->id);
         if (! $cardModel) {
             throw new CardNotFoundException('Cartão de Estudo não encontrado');
         }
 
         $cardModel->update([
-            'front' => $card->front(),
-            'back' => $card->back(),
-            'deck_id' => $card->deck()->id(),
-            'next_revision'=> $card->nextRevision(),
+            'front' => $card->front,
+            'back' => $card->back,
+            'deck_id' => $card->deck->id,
+            'next_revision' => $card->nextRevision,
+            'last_interval' => $card->lastInterval,
         ]);
     }
 }

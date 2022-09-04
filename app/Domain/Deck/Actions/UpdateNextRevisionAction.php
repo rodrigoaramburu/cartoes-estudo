@@ -17,15 +17,31 @@ final class UpdateNextRevisionAction
 
     public function __invoke(CardDTO $card, RevisionStatus $revisionStatus): void
     {
-        $data = match ($revisionStatus) {
-            RevisionStatus::ERROR => (new \DateTime('now'))->modify('+1 hour'),
-            RevisionStatus::HARD => (new \DateTime('now'))->modify('+1 day'),
-            RevisionStatus::NORMAL => (new \DateTime('now'))->modify('+2 days'),
-            RevisionStatus::EASY => (new \DateTime('now'))->modify('+4 days'),
-        };
+        if ($revisionStatus == RevisionStatus::ERROR) {
+            $nextRevision = (new \DateTime('now'))->modify('+1 min');
+            $nextInterval = ceil($card->lastInterval / 2);
+        } else {
+            $factor = match ($revisionStatus) {
+                RevisionStatus::HARD => $card->deck->hardIntervalFactor,
+                RevisionStatus::NORMAL => $card->deck->normalIntervalFactor,
+                RevisionStatus::EASY => $card->deck->easyIntervalFactor
+            };
+            $nextInterval = $card->lastInterval != 0
+                ? ceil($factor * $card->lastInterval)
+                : 1;
 
-        $card->changeNextRevision($data);
+            $nextRevision = (new \DateTime('now'))->modify("+$nextInterval days");
+        }
 
-        $this->cardRepository->update($card);
+        $this->cardRepository->update(new CardDTO(
+            id: $card->id,
+            front: $card->front,
+            back: $card->back,
+            frontHtml: $card->frontHtml,
+            backHtml: $card->backHtml,
+            nextRevision: $nextRevision,
+            lastInterval: $nextInterval,
+            deck: $card->deck
+        ));
     }
 }

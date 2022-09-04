@@ -22,12 +22,16 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
         return $decks;
     }
 
-    public function save(DeckDTO $deck): void
+    public function save(DeckDTO $deck): DeckDTO
     {
         $deckModel = Deck::create([
-            'name' => $deck->name(),
+            'name' => $deck->name,
+            'hard_interval_factor' => $deck->hardIntervalFactor,
+            'normal_interval_factor' => $deck->normalIntervalFactor,
+            'easy_interval_factor' => $deck->easyIntervalFactor,
         ]);
-        $deck->changeId($deckModel->id);
+
+        return DeckDTO::fromArray($deckModel->toArray());
     }
 
     public function delete(int $id): void
@@ -49,13 +53,16 @@ final class DeckRepositoryEloquent implements DeckRepositoryInterface
 
     public function update(DeckDTO $deck): void
     {
-        $deckModel = Deck::find($deck->id());
+        $deckModel = Deck::find($deck->id);
         if (! $deckModel) {
             throw new DeckNotFoundException('Baralho não encontrado');
         }
 
         $deckModel->update([
-            'name' => $deck->name(),
+            'name' => $deck->name,
+            'hard_interval_factor' => $deck->hardIntervalFactor,
+            'normal_interval_factor' => $deck->normalIntervalFactor,
+            'easy_interval_factor' => $deck->easyIntervalFactor,
         ]);
     }
 }

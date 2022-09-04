@@ -22,10 +22,10 @@ test('deve listar os cards de um deck', function () {
 
     $this->get(route('cards.index', $deck1->id))
         ->assertStatus(200)
-        ->assertSee($cards1[0]->front)
-        ->assertSee($cards1[1]->back)
-        ->assertDontSee($cards2[0]->back)
-        ->assertDontSee($cards2[1]->back);
+        ->assertSee(strip_tags($cards1[0]->frontHtml))
+        ->assertSee(strip_tags($cards1[1]->frontHtml))
+        ->assertDontSee(strip_tags($cards2[0]->frontHtml))
+        ->assertDontSee(strip_tags($cards2[1]->frontHtml));
 });
 
 test('deve exibir tela de adicionar cartão', function () {
@@ -65,9 +65,9 @@ test('não deve salvar card se não tiver frente, verso e deck', function () {
         'deck_id' => '',
     ])
     ->assertStatus(302)
-    ->assertSessionHasErrors(['front'=>'A frente do cartão deve ser preenchida'])
-    ->assertSessionHasErrors(['back'=>'O verso do cartão deve ser preenchido'])
-    ->assertSessionHasErrors(['deck_id'=>'O Baralho do cartão deve ser selecionado']);
+    ->assertSessionHasErrors(['front' => 'A frente do cartão deve ser preenchida'])
+    ->assertSessionHasErrors(['back' => 'O verso do cartão deve ser preenchido'])
+    ->assertSessionHasErrors(['deck_id' => 'O Baralho do cartão deve ser selecionado']);
 
     $this->assertDatabaseMissing('decks', [
         'front' => '',
@@ -146,9 +146,9 @@ test('não deve alterar cartão de estudo se não tiver frente, verso e deck', f
         'deck_id' => '',
     ])
     ->assertStatus(302)
-    ->assertSessionHasErrors(['front'=>'A frente do cartão deve ser preenchida'])
-    ->assertSessionHasErrors(['back'=>'O verso do cartão deve ser preenchido'])
-    ->assertSessionHasErrors(['deck_id'=>'O Baralho do cartão deve ser selecionado']);
+    ->assertSessionHasErrors(['front' => 'A frente do cartão deve ser preenchida'])
+    ->assertSessionHasErrors(['back' => 'O verso do cartão deve ser preenchido'])
+    ->assertSessionHasErrors(['deck_id' => 'O Baralho do cartão deve ser selecionado']);
 
     $this->assertDatabaseMissing('decks', [
         'id' => $card->id,
