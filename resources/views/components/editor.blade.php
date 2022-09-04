@@ -25,6 +25,9 @@
                     embedAudio: {
                         class: EmbedAudio,
                     },
+                    code: {
+                        class: Code,
+                    },
                     alignTune: {
                         class: AlignmentTuneTool,
                     },

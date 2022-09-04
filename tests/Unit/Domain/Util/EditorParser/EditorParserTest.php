@@ -78,3 +78,19 @@ test('deve parsear block de Header', function () {
 
     expect($html)->toBe('<h3 style="text-align: center">teste</h3>');
 });
+
+test('deve parsear block de Code', function () {
+    $parser = new EditorParser();
+
+    $json = <<<'JSON'
+        {
+            "time":1662057754901,
+            "blocks":[
+                {"id":"IUe3j2PbZB","type":"code","data":{"code":"ls"}}
+            ],
+            "version":"2.25.0"}
+        JSON;
+    $html = $parser->parse($json);
+
+    expect($html)->toBe('<code>ls</code>');
+});
