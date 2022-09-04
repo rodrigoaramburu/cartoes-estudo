@@ -11,6 +11,8 @@ class EditorParser
         $this->blockProcessors['paragraph'] = new ParagraphBlock();
         $this->blockProcessors['embedImage'] = new EmbedImageBlock();
         $this->blockProcessors['embedAudio'] = new EmbedAudioBlock();
+        $this->blockProcessors['header'] = new HeaderBlock();
+        $this->blockProcessors['code'] = new CodeBlock();
     }
 
     public function parse(string $json): string
