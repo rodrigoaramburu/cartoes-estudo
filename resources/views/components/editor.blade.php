@@ -26,13 +26,13 @@
                         class: EmbedAudio,
                     },
                     code: {
-                        class: Code,
+                        class: CodeTool,
                     },
                     alignTune: {
                         class: AlignmentTuneTool,
                     },
                 },
-                minHeight: 100,
+                minHeight: 200,
                 
                 
                 onChange: (api, event) => {
