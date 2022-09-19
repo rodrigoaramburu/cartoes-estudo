@@ -8,6 +8,8 @@ class CodeBlock implements BlockInterface
 {
     public function parse(array $block): string
     {
-        return  "<code>{$block['data']['code']}</code>";
+        $code = htmlentities($block['data']['code']);
+        //$code = nl2br($code);
+        return  "<code style=\"white-space: pre;width:100%; padding:10px\">{$code}</code>";
     }
 }
